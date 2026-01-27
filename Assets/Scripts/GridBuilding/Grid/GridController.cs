@@ -24,6 +24,8 @@ namespace Grid
             _buildHandler.BuildingCreated += OnBuildingCreated;
             _buildHandler.Ticked += OnTicked;
             _buildHandler.BuildingPlaced += OnBuildingPlaced;
+
+            _gridView.Init(_gridSize, _startPosition, 1);
         }
 
         [Inject]
@@ -36,38 +38,26 @@ namespace Grid
 
         public void OnBuildingCreated(Building building)
         {
-            if (_currentBuilding != null)
-                Destroy(_currentBuilding);
-
             _currentBuilding = building;
             _gridView.Show();
         }
 
         public void OnTicked()
         {
-            if (_currentBuilding == null)
-                return;
-
-            _currentBuildingPositionOnGrid = new Vector2Int(Mathf.FloorToInt(_currentBuilding.transform.position.x - Mathf.Abs(_startPosition.x)),
-                Mathf.FloorToInt(_currentBuilding.transform.position.z - Mathf.Abs(_startPosition.z)));
+            _currentBuildingPositionOnGrid = GetCurrentBuilldingPositionOnGrid();
 
             _currentBuilding.ChangeAvailability(_gridModel.IsGridFree(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y));
-            _currentBuilding.ChangeAvailability(false);
+            Debug.Log(_currentBuildingPositionOnGrid);
         }
 
         public void OnBuildingPlaced()
         {
-            if (_currentBuilding == null)
-                return;
-
-            _currentBuildingPositionOnGrid = new Vector2Int(Mathf.FloorToInt(_currentBuilding.transform.position.x - Mathf.Abs(_startPosition.x)),
-                Mathf.FloorToInt(_currentBuilding.transform.position.z - Mathf.Abs(_startPosition.z)));
+            _currentBuildingPositionOnGrid = GetCurrentBuilldingPositionOnGrid();
 
             if(_gridModel.IsGridFree(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y))
             {
                 _currentBuilding.Place();
                 _gridModel.PlaceBuilding(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y, _currentBuilding);
-                _currentBuilding = null;
             }
             else
             {
@@ -75,6 +65,12 @@ namespace Grid
             }
 
             _gridView.Hide();
+        }
+
+        private Vector2Int GetCurrentBuilldingPositionOnGrid()
+        {
+            return new Vector2Int(Mathf.RoundToInt(_currentBuilding.transform.position.x - _currentBuilding.HalfSize.x - _startPosition.x),
+                Mathf.RoundToInt(_currentBuilding.transform.position.z - _currentBuilding.HalfSize.z - _startPosition.z));
         }
 
         private void OnEnable()

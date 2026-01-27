@@ -10,7 +10,7 @@ namespace Buildings
 
         [SerializeField] private List<Cell> _occupiedCells; 
 
-        [SerializeField] private Collider _colider;
+        [SerializeField] private Collider _collider;
         [SerializeField] private Renderer _renderer;
 
         [SerializeField] private Material _defaultMaterial;
@@ -23,6 +23,7 @@ namespace Buildings
         [SerializeField] public BuildingTypes _type;
 
         public BuildingTypes Type => _type;
+        public Vector3 HalfSize => _collider.bounds.size / 2;
         public IReadOnlyCollection<Cell> OccupiedCells => _occupiedCells;
 
         public void Place()
@@ -31,9 +32,9 @@ namespace Buildings
             _renderer.materials[0].SetColor("_Color", DefaultColor);
         }
 
-        public void SetPosition(Vector3Int position)
+        public void SetPosition(Vector3 position)
         {
-            transform.position = position + _colider.bounds.size / 2;
+            transform.position = position + _collider.bounds.size / 2;
         }
 
         public void ChangeAvailability(bool isAvailable)

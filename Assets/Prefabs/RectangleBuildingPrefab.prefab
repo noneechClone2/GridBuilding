@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 986848536696400092}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.5290854, y: 0.49999967, z: -2.635755}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -50,9 +50,10 @@ MonoBehaviour:
     _availableBuildingTypes: 00000000
   - _positionOnGrid: {x: 1, y: 0}
     _availableBuildingTypes: 00000000
-  _colider: {fileID: 588664704971071335}
+  _collider: {fileID: 588664704971071335}
   _renderer: {fileID: 3493173504550358722}
   _defaultMaterial: {fileID: 2100000, guid: 4a371bf645542cf46808cccde16ac2c2, type: 2}
+  _shadesMaterial: {fileID: 0}
   _editModMaterial: {fileID: 2100000, guid: 0df618b1745582a48a2af191ce91426f, type: 2}
   _availableColor: {r: 0, g: 0.5019608, b: 1, a: 0}
   _unavailableColor: {r: 1, g: 0.2216981, b: 0.2216981, a: 0}

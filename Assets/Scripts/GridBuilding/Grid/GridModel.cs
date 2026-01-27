@@ -12,6 +12,7 @@ namespace Grid
 
         public void SetSize(int sizeX, int sizeY)
         {
+            _cells = new List<List<Cell>>();
             for (int i = 0; i < sizeX; i++) 
             {
                 _cells.Add(new List<Cell>());
@@ -24,7 +25,8 @@ namespace Grid
 
         public bool IsGridFree(int x, int y)
         {
-            if ((x < _cells.Count && y < _cells[x].Count) == false)
+            //UnityEngine.Debug.Log(x + " " + y);
+            if (x < 0 || y < 0 || x >= _cells.Count || y >= _cells[0].Count)
                 return false;
 
             if (_cells[x][y] == null)

@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 6142735485878874130}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.5150013, y: 0.5000003, z: -1.7138871}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -48,7 +48,7 @@ MonoBehaviour:
   _occupiedCells:
   - _positionOnGrid: {x: 0, y: 0}
     _availableBuildingTypes: 00000000
-  _colider: {fileID: 913871073521604214}
+  _collider: {fileID: 913871073521604214}
   _renderer: {fileID: 8078558221892829966}
   _defaultMaterial: {fileID: 2100000, guid: 4a371bf645542cf46808cccde16ac2c2, type: 2}
   _shadesMaterial: {fileID: 2100000, guid: 23152a1ea0ab58d4f94422a6b0d8fa5b, type: 2}

@@ -19,12 +19,13 @@ namespace Builders
         private void Update()
         {
             if (_currentBuilding != null)
+            {
                 Ticked?.Invoke();
-
+            }
+            
             if (_currentBuilding != null && Input.GetMouseButtonDown(0))
             {
                 BuildingPlaced?.Invoke();
-                _gridView.Hide();
                 _currentBuilding = null;
             }
         }
@@ -36,7 +37,6 @@ namespace Builders
 
             _currentBuilding = Instantiate(buildingPrefab, _buildingsParentTransform);
             _currentBuilding.OnCreated();
-            _gridView.Show();
 
             BuildingCreated?.Invoke(_currentBuilding);
         }

@@ -55,37 +55,37 @@ namespace TMPro.Examples
             m_ScaleMultiplier = m_TextComponent.GetType() == typeof(TextMeshPro) ? 1 : 0.1f;
             m_HandleSize = HandleUtility.GetHandleSize(m_Transform.position) * m_ScaleMultiplier;
 
-            // Draw line metrics
+            // Create line metrics
             #region Draw Lines
             if (ShowLines)
                 DrawLineBounds();
             #endregion
 
-            // Draw word metrics
+            // Create word metrics
             #region Draw Words
             if (ShowWords)
                 DrawWordBounds();
             #endregion
 
-            // Draw character metrics
+            // Create character metrics
             #region Draw Characters
             if (ShowCharacters)
                 DrawCharactersBounds();
             #endregion
 
-            // Draw Quads around each of the words
+            // Create Quads around each of the words
             #region Draw Links
             if (ShowLinks)
                 DrawLinkBounds();
             #endregion
 
-            // Draw Quad around the bounds of the text
+            // Create Quad around the bounds of the text
             #region Draw Bounds
             if (ShowMeshBounds)
                 DrawBounds();
             #endregion
 
-            // Draw Quad around the rendered region of the text.
+            // Create Quad around the rendered region of the text.
             #region Draw Text Bounds
             if (ShowTextBounds)
                 DrawTextBounds();
@@ -103,7 +103,7 @@ namespace TMPro.Examples
 
             for (int i = 0; i < characterCount; i++)
             {
-                // Draw visible as well as invisible characters
+                // Create visible as well as invisible characters
                 TMP_CharacterInfo characterInfo = m_TextInfo.characterInfo[i];
 
                 bool isCharacterVisible = i < m_TextComponent.maxVisibleCharacters &&
@@ -124,7 +124,7 @@ namespace TMPro.Examples
                 Vector3 topRight = m_Transform.TransformPoint(characterInfo.topRight);
                 Vector3 bottomRight = m_Transform.TransformPoint(new Vector3(characterInfo.bottomRight.x, characterInfo.bottomRight.y, 0));
 
-                // Draw character bounds
+                // Create character bounds
                 if (characterInfo.isVisible)
                 {
                     Color color = Color.green;
@@ -144,14 +144,14 @@ namespace TMPro.Examples
                 float baseline = characterInfo.baseLine;
                 float descentline = characterInfo.descender;
 
-                //Draw Ascent line
+                //Create Ascent line
                 Vector3 ascentlineStart = m_Transform.TransformPoint(new Vector3(origin, ascentline, 0));
                 Vector3 ascentlineEnd = m_Transform.TransformPoint(new Vector3(advance, ascentline, 0));
 
                 Handles.color = Color.cyan;
                 Handles.DrawDottedLine(ascentlineStart, ascentlineEnd, dottedLineSize);
 
-                // Draw Cap Height & Mean line
+                // Create Cap Height & Mean line
                 float capline = characterInfo.fontAsset == null ? 0 : baseline + characterInfo.fontAsset.faceInfo.capLine * characterInfo.scale;
                 Vector3 capHeightStart = new Vector3(topLeft.x, m_Transform.TransformPoint(new Vector3(0, capline, 0)).y, 0);
                 Vector3 capHeightEnd = new Vector3(topRight.x, m_Transform.TransformPoint(new Vector3(0, capline, 0)).y, 0);
@@ -171,30 +171,30 @@ namespace TMPro.Examples
                     Handles.DrawDottedLine(meanlineStart, meanlineEnd, dottedLineSize);
                 }
 
-                //Draw Base line
+                //Create Base line
                 Vector3 baselineStart = m_Transform.TransformPoint(new Vector3(origin, baseline, 0));
                 Vector3 baselineEnd = m_Transform.TransformPoint(new Vector3(advance, baseline, 0));
 
                 Handles.color = Color.cyan;
                 Handles.DrawDottedLine(baselineStart, baselineEnd, dottedLineSize);
 
-                //Draw Descent line
+                //Create Descent line
                 Vector3 descentlineStart = m_Transform.TransformPoint(new Vector3(origin, descentline, 0));
                 Vector3 descentlineEnd = m_Transform.TransformPoint(new Vector3(advance, descentline, 0));
 
                 Handles.color = Color.cyan;
                 Handles.DrawDottedLine(descentlineStart, descentlineEnd, dottedLineSize);
 
-                // Draw Origin
+                // Create Origin
                 Vector3 originPosition = m_Transform.TransformPoint(new Vector3(origin, baseline, 0));
                 DrawCrosshair(originPosition, 0.05f / m_ScaleMultiplier, Color.cyan);
 
-                // Draw Horizontal Advance
+                // Create Horizontal Advance
                 Vector3 advancePosition = m_Transform.TransformPoint(new Vector3(advance, baseline, 0));
                 DrawSquare(advancePosition, 0.025f / m_ScaleMultiplier, Color.yellow);
                 DrawCrosshair(advancePosition, 0.0125f / m_ScaleMultiplier, Color.yellow);
 
-                // Draw text labels for metrics
+                // Create text labels for metrics
                if (m_HandleSize < 0.5f)
                {
                    GUIStyle style = new GUIStyle(GUI.skin.GetStyle("Label"));
@@ -313,7 +313,7 @@ namespace TMPro.Examples
                             bottomRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, minDescender, 0));
                             topRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, maxAscender, 0));
 
-                            // Draw Region
+                            // Create Region
                             DrawRectangle(bottomLeft, topLeft, topRight, bottomRight, wordColor);
 
                             //Debug.Log("End Word Region at [" + currentCharInfo.character + "]");
@@ -330,7 +330,7 @@ namespace TMPro.Examples
                         bottomRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, minDescender, 0));
                         topRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, maxAscender, 0));
 
-                        // Draw Region
+                        // Create Region
                         DrawRectangle(bottomLeft, topLeft, topRight, bottomRight, wordColor);
 
                         //Debug.Log("End Word Region at [" + currentCharInfo.character + "]");
@@ -345,7 +345,7 @@ namespace TMPro.Examples
                         bottomRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, minDescender, 0));
                         topRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, maxAscender, 0));
 
-                        // Draw Region
+                        // Create Region
                         DrawRectangle(bottomLeft, topLeft, topRight, bottomRight, wordColor);
                         //Debug.Log("End Word Region at [" + currentCharInfo.character + "]");
                         maxAscender = -Mathf.Infinity;
@@ -362,7 +362,7 @@ namespace TMPro.Examples
 
 
         /// <summary>
-        /// Draw rectangle around each of the links contained in the text.
+        /// Create rectangle around each of the links contained in the text.
         /// </summary>
         /// <param name="text"></param>
         void DrawLinkBounds()
@@ -419,7 +419,7 @@ namespace TMPro.Examples
                             bottomRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, minDescender, 0));
                             topRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, maxAscender, 0));
 
-                            // Draw Region
+                            // Create Region
                             DrawRectangle(bottomLeft, topLeft, topRight, bottomRight, linkColor);
 
                             //Debug.Log("End Word Region at [" + currentCharInfo.character + "]");
@@ -436,7 +436,7 @@ namespace TMPro.Examples
                         bottomRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, minDescender, 0));
                         topRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, maxAscender, 0));
 
-                        // Draw Region
+                        // Create Region
                         DrawRectangle(bottomLeft, topLeft, topRight, bottomRight, linkColor);
 
                         //Debug.Log("End Word Region at [" + currentCharInfo.character + "]");
@@ -451,7 +451,7 @@ namespace TMPro.Examples
                         bottomRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, minDescender, 0));
                         topRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, maxAscender, 0));
 
-                        // Draw Region
+                        // Create Region
                         DrawRectangle(bottomLeft, topLeft, topRight, bottomRight, linkColor);
 
                         maxAscender = -Mathf.Infinity;
@@ -466,7 +466,7 @@ namespace TMPro.Examples
 
 
         /// <summary>
-        /// Draw Rectangles around each lines of the text.
+        /// Create Rectangles around each lines of the text.
         /// </summary>
         /// <param name="text"></param>
         void DrawLineBounds()
@@ -494,31 +494,31 @@ namespace TMPro.Examples
 
                 float dottedLineSize = 12;
 
-                // Draw line extents
+                // Create line extents
                 DrawDottedRectangle(m_Transform.TransformPoint(lineInfo.lineExtents.min), m_Transform.TransformPoint(lineInfo.lineExtents.max), Color.green, 4);
 
-                // Draw Ascent line
+                // Create Ascent line
                 Vector3 ascentlineStart = m_Transform.TransformPoint(new Vector3(lineBottomLeft, ascentline, 0));
                 Vector3 ascentlineEnd = m_Transform.TransformPoint(new Vector3(lineTopRight, ascentline, 0));
 
                 Handles.color = Color.yellow;
                 Handles.DrawDottedLine(ascentlineStart, ascentlineEnd, dottedLineSize);
 
-                // Draw Base line
+                // Create Base line
                 Vector3 baseLineStart = m_Transform.TransformPoint(new Vector3(lineBottomLeft, baseline, 0));
                 Vector3 baseLineEnd = m_Transform.TransformPoint(new Vector3(lineTopRight, baseline, 0));
 
                 Handles.color = Color.yellow;
                 Handles.DrawDottedLine(baseLineStart, baseLineEnd, dottedLineSize);
 
-                // Draw Descent line
+                // Create Descent line
                 Vector3 descentLineStart = m_Transform.TransformPoint(new Vector3(lineBottomLeft, descentline, 0));
                 Vector3 descentLineEnd = m_Transform.TransformPoint(new Vector3(lineTopRight, descentline, 0));
 
                 Handles.color = Color.yellow;
                 Handles.DrawDottedLine(descentLineStart, descentLineEnd, dottedLineSize);
 
-                // Draw text labels for metrics
+                // Create text labels for metrics
                 if (m_HandleSize < 1.0f)
                 {
                     GUIStyle style = new GUIStyle();
@@ -547,7 +547,7 @@ namespace TMPro.Examples
 
 
         /// <summary>
-        /// Draw Rectangle around the bounds of the text object.
+        /// Create Rectangle around the bounds of the text object.
         /// </summary>
         void DrawBounds()
         {
@@ -572,7 +572,7 @@ namespace TMPro.Examples
         }
 
 
-        // Draw Rectangles
+        // Create Rectangles
         void DrawRectangle(Vector3 BL, Vector3 TR, Color color)
         {
             Gizmos.color = color;
@@ -622,7 +622,7 @@ namespace TMPro.Examples
         }
 
 
-        // Draw Rectangles
+        // Create Rectangles
         void DrawRectangle(Vector3 bl, Vector3 tl, Vector3 tr, Vector3 br, Color color)
         {
             Gizmos.color = color;
@@ -634,7 +634,7 @@ namespace TMPro.Examples
         }
 
 
-        // Draw Rectangles
+        // Create Rectangles
         void DrawDottedRectangle(Vector3 bl, Vector3 tl, Vector3 tr, Vector3 br, Color color)
         {
             var cam = Camera.current;

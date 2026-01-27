@@ -26,52 +26,41 @@ namespace Builders
 
         public void SetBuildingPosition()
         {
-            if (_currentBuilding == null)
-                return;
-
             _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (_rayCastPlane.Raycast(_ray, out _distanceOnRay))
             {
                 _buildingPosition = Vector3Int.FloorToInt(_ray.GetPoint(_distanceOnRay));
-
                 _buildingPosition.x = (int)Mathf.Clamp(_buildingPosition.x, _gridView.StartPosition.x, _gridView.EndPosition.x);
+                _buildingPosition.y = 0;
                 _buildingPosition.z = (int)Mathf.Clamp(_buildingPosition.z, _gridView.StartPosition.z, _gridView.EndPosition.z);
 
                 _currentBuilding.SetPosition(_buildingPosition);
             }
         }
 
-        public void PlaceBuilding()
+        public void OnBuildingPlaced()
         {
-            if (_currentBuilding == null)
-                return;
-
             _currentBuilding.Place();
-
-            _currentBuilding = null;
         }
 
         public void OnBuildingCreated(Building building)
         {
-            if (building == null) 
-                return;
-
             _currentBuilding = building;
         }
 
         public void Initialize()
         {
-            _rayCastPlane = new Plane(Vector3.up, _gridView.transform.position);
+            _rayCastPlane = new Plane(Vector3.up, _gridView.StartPosition);
 
-            _buildHandler.BuildingPlaced += PlaceBuilding;
+            _buildHandler.BuildingPlaced += OnBuildingPlaced;
             _buildHandler.Ticked += SetBuildingPosition;
             _buildHandler.BuildingCreated += OnBuildingCreated;
         }
 
         public void Dispose()
         {
-            _buildHandler.BuildingPlaced -= PlaceBuilding;
+            _buildHandler.BuildingPlaced -= OnBuildingPlaced;
             _buildHandler.Ticked -= SetBuildingPosition;
         }
     }
