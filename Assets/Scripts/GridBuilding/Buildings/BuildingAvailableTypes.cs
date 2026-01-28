@@ -1,7 +1,8 @@
 namespace Buildings
 { 
-    public enum BuildingTypes
+    public enum BuildingAvailableTypes
     {
+        Everything,
         None,
         Chair,
         Table,

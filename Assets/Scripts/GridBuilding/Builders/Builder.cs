@@ -24,7 +24,12 @@ namespace Builders
             _buildHandler = buildHandler;
         }
 
-        public void SetBuildingPosition()
+        private void OnBuildingCreated(Building building)
+        {
+            _currentBuilding = building;
+        }
+
+        private void SetBuildingPosition()
         {
             _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -34,19 +39,17 @@ namespace Builders
                 _buildingPosition.x = (int)Mathf.Clamp(_buildingPosition.x, _gridView.StartPosition.x, _gridView.EndPosition.x);
                 _buildingPosition.y = 0;
                 _buildingPosition.z = (int)Mathf.Clamp(_buildingPosition.z, _gridView.StartPosition.z, _gridView.EndPosition.z);
-
+                if(_currentBuilding == null)
+                {
+                    Debug.LogWarning(1);
+                }
                 _currentBuilding.SetPosition(_buildingPosition);
             }
         }
 
-        public void OnBuildingPlaced()
+        private void OnBuildingPlaced()
         {
             _currentBuilding.Place();
-        }
-
-        public void OnBuildingCreated(Building building)
-        {
-            _currentBuilding = building;
         }
 
         public void Initialize()
@@ -60,8 +63,9 @@ namespace Builders
 
         public void Dispose()
         {
-            _buildHandler.BuildingPlaced -= OnBuildingPlaced;
+            _buildHandler.BuildingCreated -= OnBuildingCreated;
             _buildHandler.Ticked -= SetBuildingPosition;
+            _buildHandler.BuildingPlaced -= OnBuildingPlaced;
         }
     }
 }

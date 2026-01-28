@@ -20,9 +20,9 @@ namespace Buildings
         [SerializeField] private Color _availableColor;
         [SerializeField] private Color _unavailableColor;
 
-        [SerializeField] public BuildingTypes _type;
+        [SerializeField] public BuildingAvailableTypes _type;
 
-        public BuildingTypes Type => _type;
+        public BuildingAvailableTypes Type => _type;
         public Vector3 HalfSize => _collider.bounds.size / 2;
         public IReadOnlyCollection<Cell> OccupiedCells => _occupiedCells;
 

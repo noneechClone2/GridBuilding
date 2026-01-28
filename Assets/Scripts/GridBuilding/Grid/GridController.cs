@@ -46,15 +46,14 @@ namespace Grid
         {
             _currentBuildingPositionOnGrid = GetCurrentBuilldingPositionOnGrid();
 
-            _currentBuilding.ChangeAvailability(_gridModel.IsGridFree(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y));
-            Debug.Log(_currentBuildingPositionOnGrid);
+            _currentBuilding.ChangeAvailability(_gridModel.IsGridsFree(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y, _currentBuilding));
         }
 
         public void OnBuildingPlaced()
         {
             _currentBuildingPositionOnGrid = GetCurrentBuilldingPositionOnGrid();
 
-            if(_gridModel.IsGridFree(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y))
+            if(_gridModel.IsGridsFree(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y, _currentBuilding))
             {
                 _currentBuilding.Place();
                 _gridModel.PlaceBuilding(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y, _currentBuilding);

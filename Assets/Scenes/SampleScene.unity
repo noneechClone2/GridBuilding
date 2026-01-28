@@ -764,7 +764,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 161414014}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 337f8946d8840ef4594ce44c91976b1b, type: 3}
+  m_Script: {fileID: 11500000, guid: cdba96a438994434f85c022c245e363b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoroutineStarter
 --- !u!4 &161414016
@@ -7071,6 +7071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridView
   _tilePrefab: {fileID: 1785719348876025810, guid: acc05e519fcf5ca4fa5aec3a6af0c983, type: 3}
+  _gridSize: {x: 0, y: 0}
 --- !u!114 &1433251629
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,6 +15,8 @@ public class GridViewShower
     private int _diagonal;
     private int _startRow;
     private int _startCol;
+    private int _currentCellIndexX;
+    private int _currentCellIndexY;
 
     public GridViewShower(CoroutinePerformer coroutineStarter)
     {
@@ -45,8 +47,6 @@ public class GridViewShower
 
     private IEnumerator ShowFromAngleToAngle()
     {
-        if (_cells == null)
-            Debug.Log(1);
         for (; _diagonal < (_cells.Count + _cells[0].Count) / 2; _diagonal++)
         {
             _startRow = Mathf.Min(_diagonal, _cells.Count - 1);
@@ -56,7 +56,9 @@ public class GridViewShower
             {
                 if ((k == _cells.Count - k - 1 && j == _cells[0].Count - j - 1) == false)
                 {
-                    _cells[_cells.Count - k - 1][_cells[0].Count - j - 1].SetActive(true);
+                    _currentCellIndexX = _cells.Count - k - 1;
+                    _currentCellIndexY = _cells[0].Count - j - 1;
+                    _cells[_currentCellIndexX][_currentCellIndexY].SetActive(true);
                 }
 
                 _cells[k][j].SetActive(true);

@@ -7,17 +7,22 @@ namespace Grid.Cells
     [Serializable]
     public class Cell
     {
-        [SerializeField] private Vector2 _positionOnGrid;
-        [SerializeField] private BuildingTypes[] _availableBuildingTypes;
-        private Building _currentBuilding;
+        [SerializeField] private Vector2Int _positionOnGrid;
+        [SerializeField] private BuildingAvailableTypes _availableBuildingType;
+        [SerializeField, HideInInspector] private Building _currentBuilding;
 
         public Building CurrentBuilding => _currentBuilding;
-        public Vector2 PositionOnGrid => _positionOnGrid;
-        public BuildingTypes[] AvailableBuildingTypes => _availableBuildingTypes;
+        public Vector2Int PositionOnGrid => _positionOnGrid;
+        public BuildingAvailableTypes AvailableBuildingType => _availableBuildingType;
 
         public void SetCurrentBuilding(Building building)
         {
             _currentBuilding = building;
+        }
+
+        public void SetAvailableBuildingTypes(BuildingAvailableTypes buildingTypes)
+        {
+            _availableBuildingType = buildingTypes;
         }
     }
 }

@@ -1,45 +1,85 @@
 using Buildings;
 using Grid.Cells;
+using System;
 using System.Collections.Generic;
 
 namespace Grid
 {
     public class GridModel
     {
+        public Action<int, int, BuildingAvailableTypes> ChangeCellAvailability;
+
         private List<List<Cell>> _cells;
 
         public IReadOnlyCollection<IReadOnlyCollection<Cell>> Cells;
 
+        private Cell _currentCell;
+        private BuildingAvailableTypes _currentCellAvailableType;
+        private int _currentCellXPosition;
+        private int _currentCellYPosition;
+
         public void SetSize(int sizeX, int sizeY)
         {
             _cells = new List<List<Cell>>();
-            for (int i = 0; i < sizeX; i++) 
+            for (int i = 0; i < sizeX; i++)
             {
-                _cells.Add(new List<Cell>());
+                if (_cells.Count <= i)
+                    _cells.Add(new List<Cell>());
+
                 for (int j = 0; j < sizeY; j++)
                 {
-                    _cells[i].Add(null);
+                    if (_cells[i].Count <= j)
+                    {
+                        _cells[i].Add(new Cell());
+                        _cells[i][j].SetAvailableBuildingTypes(BuildingAvailableTypes.Everything);
+                    }
                 }
             }
         }
 
-        public bool IsGridFree(int x, int y)
+        public bool IsGridsFree(int x, int y, Building building)
         {
-            //UnityEngine.Debug.Log(x + " " + y);
             if (x < 0 || y < 0 || x >= _cells.Count || y >= _cells[0].Count)
                 return false;
 
-            if (_cells[x][y] == null)
+            foreach (var cell in building.OccupiedCells)
             {
-                return true;
+                _currentCellXPosition = x + cell.PositionOnGrid.x;
+                _currentCellYPosition = y + cell.PositionOnGrid.y;
+
+                if ((_currentCellXPosition < 0 || _cells.Count <= _currentCellXPosition
+                    || _currentCellYPosition < 0 || _cells[0].Count <= _currentCellYPosition))
+                {
+                    return false;
+                }
+
+                _currentCellAvailableType = _cells[_currentCellXPosition][_currentCellYPosition].AvailableBuildingType;
+
+                UnityEngine.Debug.Log(_currentCellAvailableType);
+
+                if (_currentCellAvailableType == building.Type
+                    || _currentCellAvailableType == BuildingAvailableTypes.Everything)
+                {
+                    continue;
+                }
+
+                return false;
             }
 
-            return false;
+            return true;
         }
 
         public void PlaceBuilding(int x, int y, Building building)
         {
-               
+            _cells[x][y].SetCurrentBuilding(building);
+            foreach (var ocuppiedCell in building.OccupiedCells)
+            {
+                _currentCellXPosition = x + ocuppiedCell.PositionOnGrid.x;
+                _currentCellYPosition = y + ocuppiedCell.PositionOnGrid.y;
+
+                _cells[_currentCellXPosition][_currentCellYPosition] = ocuppiedCell;
+                ChangeCellAvailability?.Invoke(_currentCellXPosition, _currentCellYPosition, ocuppiedCell.AvailableBuildingType);
+            }
         }
     }
 }
