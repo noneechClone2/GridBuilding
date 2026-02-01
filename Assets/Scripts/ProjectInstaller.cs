@@ -1,5 +1,6 @@
 using Builders;
 using Grid;
+using Grid.Cells;
 using UnityEngine;
 using Zenject;
 
@@ -14,10 +15,14 @@ public class ProjectInstaller : MonoInstaller
     {
         Container.BindInterfacesAndSelfTo<Builder>().AsSingle().NonLazy();
         Container.Bind<BuildHandler>().FromInstance(_buildHandler).AsSingle();
+
         Container.Bind<GridController>().FromInstance(_gridController).AsSingle();
         Container.Bind<GridView>().FromInstance(_gridView).AsSingle();
-        Container.Bind<GridViewShower>().AsSingle();
         Container.Bind<GridModel>().AsSingle();
+        Container.Bind<GridViewShower>().AsSingle();
+        Container.BindInterfacesAndSelfTo<CellAvailabilityChanger>().AsSingle().NonLazy();
+        Container.Bind<GridCollection>().AsSingle();
+
         Container.Bind<CoroutinePerformer>().FromInstance(_coroutineStarter).AsSingle();
     }
 }

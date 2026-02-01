@@ -1,5 +1,6 @@
 using Builders;
 using Buildings;
+using Grid.Cells;
 using UnityEngine;
 using Zenject;
 
@@ -13,20 +14,9 @@ namespace Grid
         private GridView _gridView;
         private GridModel _gridModel;
         private BuildHandler _buildHandler;
-        
+
         private Building _currentBuilding;
         private Vector2Int _currentBuildingPositionOnGrid;
-
-        private void Start()
-        {
-            _gridModel.SetSize(_gridSize.x, _gridSize.y);
-
-            _buildHandler.BuildingCreated += OnBuildingCreated;
-            _buildHandler.Ticked += OnTicked;
-            _buildHandler.BuildingPlaced += OnBuildingPlaced;
-
-            _gridView.Init(_gridSize, _startPosition, 1);
-        }
 
         [Inject]
         public void OnConstruct(GridView gridView, GridModel gridModel, BuildHandler buildHandler)
@@ -34,6 +24,9 @@ namespace Grid
             _gridView = gridView;
             _gridModel = gridModel;
             _buildHandler = buildHandler;
+
+            _gridModel.SetSize(_gridSize.x, _gridSize.y);
+            _gridView.Init(_gridSize, _startPosition, 1);
         }
 
         public void OnBuildingCreated(Building building)
@@ -52,18 +45,17 @@ namespace Grid
         public void OnBuildingPlaced()
         {
             _currentBuildingPositionOnGrid = GetCurrentBuilldingPositionOnGrid();
+            _gridView.Hide();
 
-            if(_gridModel.IsGridsFree(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y, _currentBuilding))
+            if (_gridModel.IsGridsFree(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y, _currentBuilding))
             {
                 _currentBuilding.Place();
                 _gridModel.PlaceBuilding(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y, _currentBuilding);
             }
             else
             {
-                Destroy(_currentBuilding);
+                Destroy(_currentBuilding.gameObject);
             }
-
-            _gridView.Hide();
         }
 
         private Vector2Int GetCurrentBuilldingPositionOnGrid()
@@ -74,12 +66,10 @@ namespace Grid
 
         private void OnEnable()
         {
-            if (_buildHandler == null)
-                return;
-
             _buildHandler.BuildingCreated += OnBuildingCreated;
             _buildHandler.Ticked += OnTicked;
             _buildHandler.BuildingPlaced += OnBuildingPlaced;
+
         }
 
         private void OnDisable()

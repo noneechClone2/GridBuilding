@@ -18,15 +18,15 @@ namespace Builders
 
         private void Update()
         {
-            if (_currentBuilding != null)
-            {
-                Ticked?.Invoke();
-            }
-            
             if (_currentBuilding != null && Input.GetMouseButtonDown(0))
             {
                 BuildingPlaced?.Invoke();
                 _currentBuilding = null;
+            }
+            
+            if (_currentBuilding != null)
+            {
+                Ticked?.Invoke();
             }
         }
 

@@ -7,13 +7,12 @@ namespace Grid
 {
     public class GridModel
     {
-        public Action<int, int, BuildingAvailableTypes> ChangeCellAvailability;
+        public Action<int, int, bool, BuildingAvailableTypes> CellAvailabilityChanged;
 
         private List<List<Cell>> _cells;
 
         public IReadOnlyCollection<IReadOnlyCollection<Cell>> Cells;
 
-        private Cell _currentCell;
         private BuildingAvailableTypes _currentCellAvailableType;
         private int _currentCellXPosition;
         private int _currentCellYPosition;
@@ -31,7 +30,7 @@ namespace Grid
                     if (_cells[i].Count <= j)
                     {
                         _cells[i].Add(new Cell());
-                        _cells[i][j].SetAvailableBuildingTypes(BuildingAvailableTypes.Everything);
+                        _cells[i][j].SetAvailableBuildingType(BuildingAvailableTypes.Everything);
                     }
                 }
             }
@@ -44,6 +43,7 @@ namespace Grid
 
             foreach (var cell in building.OccupiedCells)
             {
+                
                 _currentCellXPosition = x + cell.PositionOnGrid.x;
                 _currentCellYPosition = y + cell.PositionOnGrid.y;
 
@@ -55,10 +55,7 @@ namespace Grid
 
                 _currentCellAvailableType = _cells[_currentCellXPosition][_currentCellYPosition].AvailableBuildingType;
 
-                UnityEngine.Debug.Log(_currentCellAvailableType);
-
-                if (_currentCellAvailableType == building.Type
-                    || _currentCellAvailableType == BuildingAvailableTypes.Everything)
+                if (_currentCellAvailableType == BuildingAvailableTypes.Everything)
                 {
                     continue;
                 }
@@ -78,7 +75,7 @@ namespace Grid
                 _currentCellYPosition = y + ocuppiedCell.PositionOnGrid.y;
 
                 _cells[_currentCellXPosition][_currentCellYPosition] = ocuppiedCell;
-                ChangeCellAvailability?.Invoke(_currentCellXPosition, _currentCellYPosition, ocuppiedCell.AvailableBuildingType);
+                CellAvailabilityChanged?.Invoke(_currentCellXPosition, _currentCellYPosition, false, ocuppiedCell.AvailableBuildingType);
             }
         }
     }

@@ -1,10 +1,10 @@
+using Grid;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GridViewShower
 {
-    private List<List<GameObject>> _cells;
+    private GridCollection _gridCollection;
 
     private CoroutinePerformer _coroutineStarter;
     private WaitForSeconds _delay;
@@ -23,9 +23,9 @@ public class GridViewShower
         _coroutineStarter = coroutineStarter;
     }
 
-    public void Init(float delay, List<List<GameObject>> cells)
+    public void Init(float delay, GridCollection gridCollection)
     {
-        _cells = cells;
+        _gridCollection = gridCollection;
         _delay = new WaitForSeconds(delay);
     }
 
@@ -47,21 +47,21 @@ public class GridViewShower
 
     private IEnumerator ShowFromAngleToAngle()
     {
-        for (; _diagonal < (_cells.Count + _cells[0].Count) / 2; _diagonal++)
+        for (; _diagonal < (_gridCollection.XSize + _gridCollection.YSize) / 2; _diagonal++)
         {
-            _startRow = Mathf.Min(_diagonal, _cells.Count - 1);
+            _startRow = Mathf.Min(_diagonal, _gridCollection.XSize - 1);
             _startCol = _diagonal - _startRow;
 
-            for (int k = _startRow, j = _startCol; k >= 0 && j < _cells[0].Count; k--, j++)
+            for (int k = _startRow, j = _startCol; k >= 0 && j < _gridCollection.YSize; k--, j++)
             {
-                if ((k == _cells.Count - k - 1 && j == _cells[0].Count - j - 1) == false)
+                if ((k == _gridCollection.XSize - k - 1 && j == _gridCollection.YSize - j - 1) == false)
                 {
-                    _currentCellIndexX = _cells.Count - k - 1;
-                    _currentCellIndexY = _cells[0].Count - j - 1;
-                    _cells[_currentCellIndexX][_currentCellIndexY].SetActive(true);
+                    _currentCellIndexX = _gridCollection.XSize - k - 1;
+                    _currentCellIndexY = _gridCollection.YSize - j - 1;
+                    _gridCollection.GetObject(_currentCellIndexX, _currentCellIndexY).SetActive(true);
                 }
 
-                _cells[k][j].SetActive(true);
+                _gridCollection.GetObject(k, j).SetActive(true);
             }
 
             yield return _delay;
@@ -72,17 +72,17 @@ public class GridViewShower
     {
         for (; _diagonal >= 0; _diagonal--)
         {
-            _startRow = Mathf.Min(_diagonal, _cells.Count - 1);
+            _startRow = Mathf.Min(_diagonal, _gridCollection.XSize - 1);
             _startCol = _diagonal - _startRow;
 
-            for (int k = _startRow, j = _startCol; k >= 0 && j < _cells[0].Count; k--, j++)
+            for (int k = _startRow, j = _startCol; k >= 0 && j < _gridCollection.YSize; k--, j++)
             {
-                if ((k == _cells.Count - k - 1 && j == _cells[0].Count - j - 1) == false)
+                if ((k == _gridCollection.XSize - k - 1 && j == _gridCollection.YSize - j - 1) == false)
                 {
-                    _cells[_cells.Count - k - 1][_cells[0].Count - j - 1].SetActive(false);
+                    _gridCollection.GetObject(_gridCollection.XSize - k - 1, _gridCollection.YSize - j - 1).SetActive(false);
                 }
 
-                _cells[k][j].SetActive(false);
+                _gridCollection.GetObject(k, j).SetActive(false);
             }
 
             yield return _delay;

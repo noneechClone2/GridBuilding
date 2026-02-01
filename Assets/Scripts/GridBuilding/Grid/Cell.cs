@@ -20,9 +20,9 @@ namespace Grid.Cells
             _currentBuilding = building;
         }
 
-        public void SetAvailableBuildingTypes(BuildingAvailableTypes buildingTypes)
+        public void SetAvailableBuildingType(BuildingAvailableTypes buildingType)
         {
-            _availableBuildingType = buildingTypes;
+            _availableBuildingType = buildingType;
         }
     }
 }
