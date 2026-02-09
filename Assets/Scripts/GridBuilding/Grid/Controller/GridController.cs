@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Builders;
 using Buildings;
+using Data;
 using Grid.Cells;
 using UnityEngine;
 using Zenject;
@@ -14,42 +16,49 @@ namespace Grid
         private GridView _gridView;
         private GridModel _gridModel;
         private BuildHandler _buildHandler;
+        private DataLoader _dataLoader;
 
         private Building _currentBuilding;
         private Vector2Int _currentBuildingPositionOnGrid;
 
         [Inject]
-        public void OnConstruct(GridView gridView, GridModel gridModel, BuildHandler buildHandler)
+        public void OnConstruct(GridView gridView, GridModel gridModel, BuildHandler buildHandler, DataLoader dataLoader)
         {
             _gridView = gridView;
             _gridModel = gridModel;
             _buildHandler = buildHandler;
+            _dataLoader = dataLoader;
 
             _gridModel.SetSize(_gridSize.x, _gridSize.y);
             _gridView.Init(_gridSize, _startPosition, 1);
         }
 
-        public void OnBuildingCreated(Building building)
+        private void OnCellsLoaded(List<List<Cell>> cells)
+        {
+            _gridModel.SetCellsCollection(cells);
+            _gridView.OnCellsLoaded(cells);
+        }
+
+        private void OnBuildingCreated(Building building)
         {
             _currentBuilding = building;
             _gridView.Show();
         }
 
-        public void OnTicked()
+        private void OnTicked()
         {
             _currentBuildingPositionOnGrid = GetCurrentBuilldingPositionOnGrid();
 
             _currentBuilding.ChangeAvailability(_gridModel.IsGridsFree(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y, _currentBuilding));
         }
 
-        public void OnBuildingPlaced()
+        private void OnBuildingPlaced()
         {
             _currentBuildingPositionOnGrid = GetCurrentBuilldingPositionOnGrid();
             _gridView.Hide();
 
             if (_gridModel.IsGridsFree(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y, _currentBuilding))
             {
-                _currentBuilding.Place();
                 _gridModel.PlaceBuilding(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y, _currentBuilding);
             }
             else
@@ -69,17 +78,15 @@ namespace Grid
             _buildHandler.BuildingCreated += OnBuildingCreated;
             _buildHandler.Ticked += OnTicked;
             _buildHandler.BuildingPlaced += OnBuildingPlaced;
-
+            _dataLoader.CellsLoaded += OnCellsLoaded;
         }
 
         private void OnDisable()
         {
-            if (_buildHandler == null)
-                return;
-
             _buildHandler.BuildingCreated -= OnBuildingCreated;
             _buildHandler.Ticked -= OnTicked;
             _buildHandler.BuildingPlaced -= OnBuildingPlaced;
+            _dataLoader.CellsLoaded -= OnCellsLoaded;
         }
     }
 }

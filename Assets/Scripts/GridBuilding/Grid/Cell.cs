@@ -1,5 +1,7 @@
 using Buildings;
 using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using UnityEngine;
 
 namespace Grid.Cells
@@ -7,9 +9,10 @@ namespace Grid.Cells
     [Serializable]
     public class Cell
     {
-        [field: SerializeField] public BuildingAvailableTypes AvailableBuildingType { get; private set; }
-        [field: SerializeField] public int XPosition { get; private set; }
-        [field: SerializeField] public int YPosition { get; private set; }
+        [JsonConverter(typeof(StringEnumConverter))] [field: SerializeField]
+        public BuildingAvailableTypes AvailableBuildingType;
+        [field: SerializeField] public int XPosition;
+        [field: SerializeField] public int YPosition;
         
         private Building _currentBuilding;
 

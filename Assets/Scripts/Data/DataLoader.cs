@@ -11,7 +11,7 @@ namespace Data
     public class DataLoader : MonoBehaviour
     {
         private const string BaseFolderPath = "Data";
-        private const string CellStoragePath = "CellStorage";
+        private const string CellStorageFilePath = "CellStorage";
 
         public event Action<List<List<Cell>>> CellsLoaded;
 
@@ -23,7 +23,6 @@ namespace Data
         [Inject]
         public void OnConstruct(GridModel gridModel, BaseStorage baseStorage)
         {
-            Debug.Log($"Constructing data");
             _gridModel = gridModel;
             _baseStorage = baseStorage;
         }
@@ -32,12 +31,12 @@ namespace Data
         {
             Debug.Log($"Saving data {_gridModel.Cells.Count}");
             _baseStorage.Save<IReadOnlyCollection<IReadOnlyCollection<Cell>>>(
-                Path.Combine(BaseFolderPath, CellStoragePath), _gridModel.Cells);
+                Path.Combine(BaseFolderPath, CellStorageFilePath), _gridModel.Cells);
         }
 
         public void LoadData()
         {
-            _cells = _baseStorage.Load<List<List<Cell>>>(Path.Combine(BaseFolderPath, CellStoragePath));
+            _cells = _baseStorage.Load<List<List<Cell>>>(Path.Combine(BaseFolderPath, CellStorageFilePath));
 
             CellsLoaded?.Invoke(_cells);
         }

@@ -1,11 +1,12 @@
 using Buildings;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 namespace Grid.Cells
 {
-    public class CellAvailabilityChanger : IInitializable, IDisposable
+    public class CellColorChanger : IInitializable, IDisposable
     {
         private readonly Color UnavailableColor = new Color(1f, 0.4f, 0.4f);
         private readonly Color AvailableColor = Color.green;
@@ -15,10 +16,25 @@ namespace Grid.Cells
         private GridModel _gridModel;
         private Renderer _currentCellRenderer;
 
-        public CellAvailabilityChanger(GridCollection gridCollection, GridModel gridModel)
+        public CellColorChanger(GridCollection gridCollection, GridModel gridModel)
         {
             _gridCollection = gridCollection;
             _gridModel = gridModel;
+        }
+
+        public void CellCollectionLoaded(List<List<Cell>> cells)
+        {
+            for (int x = 0; x < cells.Count; x++)
+            {
+                for (int y = 0; y < cells[x].Count; y++)
+                {
+                    Debug.Log(x + " " + y);
+                    if(cells[x][y].AvailableBuildingType == BuildingAvailableTypes.None)
+                        _gridCollection.GetObjectRenderer(cells[x][y].XPosition, cells[x][y].YPosition).material.SetColor(CellColorId, UnavailableColor);
+                    else 
+                        _gridCollection.GetObjectRenderer(cells[x][y].XPosition, cells[x][y].YPosition).material.SetColor(CellColorId, AvailableColor);
+                }
+            }
         }
 
         private void OnCellAvailabilityChanged(int x, int y, bool isAvailable, BuildingAvailableTypes availableTypes)

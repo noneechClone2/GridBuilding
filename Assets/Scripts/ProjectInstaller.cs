@@ -40,7 +40,7 @@ public class ProjectInstaller : MonoInstaller
         Container.Bind<GridView>().FromInstance(_gridView).AsSingle();
         Container.Bind<GridModel>().AsSingle();
         Container.Bind<GridViewShower>().AsSingle();
-        Container.BindInterfacesAndSelfTo<CellAvailabilityChanger>().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<CellColorChanger>().AsSingle().NonLazy();
         Container.Bind<GridCollection>().AsSingle();
     }
 }

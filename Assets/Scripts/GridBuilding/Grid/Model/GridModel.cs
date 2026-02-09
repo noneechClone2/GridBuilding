@@ -8,6 +8,7 @@ namespace Grid
     public class GridModel
     {
         public Action<int, int, bool, BuildingAvailableTypes> CellAvailabilityChanged;
+        public Action<List<List<Cell>>> CellsLoaded;
 
         private List<List<Cell>> _cells;
 
@@ -36,7 +37,7 @@ namespace Grid
                 }
             }
         }
-
+        
         public bool IsGridsFree(int x, int y, Building building)
         {
             if (x < 0 || y < 0 || x >= _cells.Count || y >= _cells[0].Count)
@@ -75,10 +76,17 @@ namespace Grid
                 _currentCellXPosition = x + ocuppiedCell.XPosition;
                 _currentCellYPosition = y + ocuppiedCell.YPosition;
 
-                _cells[_currentCellXPosition][_currentCellYPosition] = ocuppiedCell;
+                _cells[_currentCellXPosition][_currentCellYPosition].SetAvailableBuildingType(ocuppiedCell.AvailableBuildingType);
                 CellAvailabilityChanged?.Invoke(_currentCellXPosition, _currentCellYPosition, false,
                     ocuppiedCell.AvailableBuildingType);
             }
+        }
+
+        public void SetCellsCollection(List<List<Cell>> cells)
+        {
+            _cells = cells;
+            
+            CellsLoaded?.Invoke(cells);
         }
     }
 }

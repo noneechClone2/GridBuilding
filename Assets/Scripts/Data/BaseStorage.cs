@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using UnityEngine;
 
 namespace Data
@@ -13,7 +16,9 @@ namespace Data
 
         public void Save<T>(string path, T data, Action<bool> callback = null)
         {
+            
             _path = BuildPath(path);
+            
             _json = JsonConvert.SerializeObject(data);
             
             _directory = Path.GetDirectoryName(_path);
@@ -27,6 +32,11 @@ namespace Data
             {
                 streamWriter.WriteLine(_json);
             }
+
+            data = JsonConvert.DeserializeObject<T>(_json);
+            _json = JsonConvert.SerializeObject(data);
+            
+            Debug.Log(_json);
 
             callback?.Invoke(true);
         }
@@ -43,6 +53,8 @@ namespace Data
                     callback?.Invoke(false);
                 else
                     callback?.Invoke(true);
+                
+                Debug.Log(_json);
 
                 return JsonConvert.DeserializeObject<T>(_json);
             }
@@ -50,7 +62,6 @@ namespace Data
 
         private string BuildPath(string path)
         {
-            Debug.Log(Path.Combine(Application.persistentDataPath, path));
             return Path.Combine(Application.persistentDataPath, path);
         }
     }
