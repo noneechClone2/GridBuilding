@@ -15,8 +15,11 @@ namespace Builders
         private Plane _rayCastPlane;
         private Vector3Int _buildingPosition;
         private Ray _ray;
-        public Camera Camera;
         private float _distanceOnRay;
+        private bool _isDragging;
+        private Vector3 _mouseStartDraggingPosition;
+        private Vector3 _buildingStartDraggingPosition;
+        private Vector3 _currentMousePosition;
 
         public Builder(GridView gridView, BuildHandler buildHandler)
         {
@@ -29,43 +32,70 @@ namespace Builders
             _currentBuilding = building;
         }
 
-        private void SetBuildingPosition()
+        private void OnTicked()
         {
-            _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (_rayCastPlane.Raycast(_ray, out _distanceOnRay))
+            if (Input.GetMouseButtonDown(0))
             {
-                _buildingPosition = Vector3Int.FloorToInt(_ray.GetPoint(_distanceOnRay));
-                _buildingPosition.x = (int)Mathf.Clamp(_buildingPosition.x, _gridView.StartPosition.x, _gridView.EndPosition.x);
+                _isDragging = true;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                _isDragging = false;
+            }
+        }
+
+        private void OnFixedTicked()
+        {
+            if (_isDragging == false && _mouseStartDraggingPosition != Vector3.zero)
+            {
+                _mouseStartDraggingPosition = Vector3.zero;
+            }
+            
+            if (_isDragging && _mouseStartDraggingPosition == Vector3.zero)
+            {
+                _mouseStartDraggingPosition = _currentMousePosition;
+                _buildingStartDraggingPosition = _currentBuilding.transform.position - _currentBuilding.HalfSize;
+            }
+            
+            _currentMousePosition = GetMousePosition();
+            
+            if (_isDragging)
+            {
+                _buildingPosition = Vector3Int.FloorToInt(_buildingStartDraggingPosition + (_currentMousePosition - _mouseStartDraggingPosition));
+                _buildingPosition.x = (int)Mathf.Clamp(_buildingPosition.x, _gridView.StartPosition.x,
+                    _gridView.EndPosition.x);
                 _buildingPosition.y = 0;
-                _buildingPosition.z = (int)Mathf.Clamp(_buildingPosition.z, _gridView.StartPosition.z, _gridView.EndPosition.z);
-                if(_currentBuilding == null)
-                {
-                    Debug.LogWarning(1);
-                }
+                _buildingPosition.z = (int)Mathf.Clamp(_buildingPosition.z, _gridView.StartPosition.z,
+                    _gridView.EndPosition.z);
+
                 _currentBuilding.SetPosition(_buildingPosition);
             }
         }
 
-        private void OnBuildingPlaced()
+        private Vector3 GetMousePosition()
         {
-            _currentBuilding.Place();
+            _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (_rayCastPlane.Raycast(_ray, out _distanceOnRay))
+                return _ray.GetPoint(_distanceOnRay);
+
+            return Vector3.zero;
         }
 
         public void Initialize()
         {
             _rayCastPlane = new Plane(Vector3.up, _gridView.StartPosition);
 
-            _buildHandler.BuildingPlaced += OnBuildingPlaced;
-            _buildHandler.Ticked += SetBuildingPosition;
             _buildHandler.BuildingCreated += OnBuildingCreated;
+            _buildHandler.Ticked += OnTicked;
+            _buildHandler.FixedTicked += OnFixedTicked;
         }
 
         public void Dispose()
         {
             _buildHandler.BuildingCreated -= OnBuildingCreated;
-            _buildHandler.Ticked -= SetBuildingPosition;
-            _buildHandler.BuildingPlaced -= OnBuildingPlaced;
+            _buildHandler.Ticked -= OnTicked;
+            _buildHandler.FixedTicked -= OnFixedTicked;
         }
     }
 }

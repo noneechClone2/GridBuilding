@@ -31,7 +31,7 @@ public class GridViewShower
 
     public void Show()
     {
-        if (_hideCoroutine != null) 
+        if (_hideCoroutine != null)
             _coroutineStarter.StopCoroutine(_hideCoroutine);
 
         _showCoroutine = _coroutineStarter.StartCoroutine(ShowFromAngleToAngle());
@@ -39,7 +39,7 @@ public class GridViewShower
 
     public void Hide()
     {
-        if (_showCoroutine != null) 
+        if (_showCoroutine != null)
             _coroutineStarter.StopCoroutine(_showCoroutine);
 
         _hideCoroutine = _coroutineStarter.StartCoroutine(HideFromAngleToAngle());
@@ -79,7 +79,8 @@ public class GridViewShower
             {
                 if ((k == _gridCollection.XSize - k - 1 && j == _gridCollection.YSize - j - 1) == false)
                 {
-                    _gridCollection.GetObject(_gridCollection.XSize - k - 1, _gridCollection.YSize - j - 1).SetActive(false);
+                    _gridCollection.GetObject(_gridCollection.XSize - k - 1, _gridCollection.YSize - j - 1)
+                        .SetActive(false);
                 }
 
                 _gridCollection.GetObject(k, j).SetActive(false);

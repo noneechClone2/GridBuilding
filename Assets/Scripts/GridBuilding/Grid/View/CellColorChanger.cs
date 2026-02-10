@@ -28,11 +28,12 @@ namespace Grid.Cells
             {
                 for (int y = 0; y < cells[x].Count; y++)
                 {
-                    Debug.Log(x + " " + y);
+                    _currentCellRenderer = _gridCollection.GetObjectRenderer(cells[x][y].XPosition, cells[x][y].YPosition);
+                    
                     if(cells[x][y].AvailableBuildingType == BuildingAvailableTypes.None)
-                        _gridCollection.GetObjectRenderer(cells[x][y].XPosition, cells[x][y].YPosition).material.SetColor(CellColorId, UnavailableColor);
+                        _currentCellRenderer.material.SetColor(CellColorId, UnavailableColor);
                     else 
-                        _gridCollection.GetObjectRenderer(cells[x][y].XPosition, cells[x][y].YPosition).material.SetColor(CellColorId, AvailableColor);
+                        _currentCellRenderer.material.SetColor(CellColorId, AvailableColor);
                 }
             }
         }
@@ -54,7 +55,7 @@ namespace Grid.Cells
 
         public void Dispose()
         {
-            _gridModel.CellAvailabilityChanged += OnCellAvailabilityChanged;
+            _gridModel.CellAvailabilityChanged -= OnCellAvailabilityChanged;
         }
     }
 }

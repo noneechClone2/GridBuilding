@@ -16,13 +16,12 @@ namespace Data
 
         public void Save<T>(string path, T data, Action<bool> callback = null)
         {
-            
             _path = BuildPath(path);
-            
+
             _json = JsonConvert.SerializeObject(data);
-            
+
             _directory = Path.GetDirectoryName(_path);
-            
+
             if (!Directory.Exists(_directory))
             {
                 Directory.CreateDirectory(_directory);
@@ -35,8 +34,6 @@ namespace Data
 
             data = JsonConvert.DeserializeObject<T>(_json);
             _json = JsonConvert.SerializeObject(data);
-            
-            Debug.Log(_json);
 
             callback?.Invoke(true);
         }
@@ -53,8 +50,6 @@ namespace Data
                     callback?.Invoke(false);
                 else
                     callback?.Invoke(true);
-                
-                Debug.Log(_json);
 
                 return JsonConvert.DeserializeObject<T>(_json);
             }

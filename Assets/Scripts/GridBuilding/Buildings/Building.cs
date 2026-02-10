@@ -48,6 +48,7 @@ namespace Buildings
         public void OnCreated()
         {
             _renderer.SetMaterials(new() { _editModMaterial, _shadesMaterial });
+            SetPosition(new Vector3(0, 0, 0));
         }
     }
 }

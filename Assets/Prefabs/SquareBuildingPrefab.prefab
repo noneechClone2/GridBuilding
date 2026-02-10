@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Building
   _occupiedCells:
-  - _positionOnGrid: {x: 0, y: 0}
-    _availableBuildingType: 1
-    _currentBuilding: {fileID: 0}
+  - AvailableBuildingType: 1
+    XPosition: 0
+    YPosition: 0
   _collider: {fileID: 913871073521604214}
   _renderer: {fileID: 8078558221892829966}
   _defaultMaterial: {fileID: 2100000, guid: 4a371bf645542cf46808cccde16ac2c2, type: 2}

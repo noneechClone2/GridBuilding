@@ -12,7 +12,6 @@ namespace Grid
         private Vector2Int _gridSize;
         private GridViewShower _shower;
         private GridCollection _gridCollection;
-        private CellColorChanger _cellColorChanger;
 
         private float _displayAndHideOneCellTime;
         private bool _isShowed = false;
@@ -25,7 +24,6 @@ namespace Grid
         {
             _shower = gridViewShower;
             _gridCollection = gridCollection;
-            _cellColorChanger = cellColorChanger;
         }
 
         public void Init(Vector2Int gridSize, Vector3 startPosition, float displayAndHideTime)
@@ -33,16 +31,16 @@ namespace Grid
             _gridSize = gridSize;
             _displayAndHideOneCellTime = displayAndHideTime / (gridSize.x + gridSize.y) / 2;
             
-            PrepareCells(startPosition, EndPosition);
+            _shower.Init(_displayAndHideOneCellTime, _gridCollection);
+            
+            PrepareCells(startPosition);
         }
 
-        public void OnCellsLoaded(List<List<Cell>> cells)
+        public void CellsLoaded(List<List<Cell>> cells)
         {
             _gridSize = new Vector2Int(cells.Count, cells[0].Count);
             
-            PrepareCells(StartPosition, EndPosition);
-            print(1);
-            _cellColorChanger.CellCollectionLoaded(cells);
+            PrepareCells(StartPosition);
         }
         
         public void Show()
@@ -64,17 +62,17 @@ namespace Grid
             _isShowed = false;
         }
 
-        private void PrepareCells(Vector3 startPosition, Vector3 endPosition)
+        private void PrepareCells(Vector3 startPosition)
         {
             StartPosition = startPosition;
             
-            EndPosition = new Vector3(startPosition.x + 1 * _gridSize.x - 1,
+            EndPosition = new Vector3(StartPosition.x + 1 * _gridSize.x - 1,
                 StartPosition.y,
-                startPosition.z + 1 * _gridSize.y - 1);
+                StartPosition.z + 1 * _gridSize.y - 1);
 
             _gridCollection.CreateCollection(_gridSize.x, _gridSize.y, _tilePrefab, 1, StartPosition, transform);
+            
             PlaceCells();
-            _shower.Init(_displayAndHideOneCellTime, _gridCollection);
         }
         
         private void PlaceCells()
@@ -84,9 +82,9 @@ namespace Grid
                 for (int j = 0; j < _gridCollection.YSize; j++)
                 {
                     _gridCollection.GetObject(i, j).transform.position = new Vector3(
-                        GetPositionFromCoordinate(i, 1) + StartPosition.x,
+                        GetCellPositionFromCoordinate(i, 1) + StartPosition.x,
                         StartPosition.y,
-                        GetPositionFromCoordinate(j, 1) + StartPosition.z);
+                        GetCellPositionFromCoordinate(j, 1) + StartPosition.z);
                 }
             }
         }
@@ -102,7 +100,7 @@ namespace Grid
             }
         }
 
-        private float GetPositionFromCoordinate(int coordinate, float scale) =>
+        private float GetCellPositionFromCoordinate(int coordinate, float scale) =>
             coordinate * scale + scale / 2;
     }
 }

@@ -9,6 +9,7 @@ namespace Builders
     {
         public event Action<Building> BuildingCreated;
         public event Action Ticked;
+        public event Action FixedTicked;
         public event Action BuildingPlaced;
 
         [SerializeField] private Transform _buildingsParentTransform;
@@ -18,15 +19,17 @@ namespace Builders
 
         private void Update()
         {
-            if (_currentBuilding != null && Input.GetMouseButtonDown(0))
-            {
-                BuildingPlaced?.Invoke();
-                _currentBuilding = null;
-            }
-            
             if (_currentBuilding != null)
             {
                 Ticked?.Invoke();
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            if (_currentBuilding != null)
+            {
+                FixedTicked?.Invoke();
             }
         }
 
@@ -39,6 +42,16 @@ namespace Builders
             _currentBuilding.OnCreated();
 
             BuildingCreated?.Invoke(_currentBuilding);
+        }
+
+        public void PlaceBuilding()
+        {
+            if (_currentBuilding == null)
+                throw new Exception("no building");
+            
+            BuildingPlaced?.Invoke();
+            _currentBuilding.Place();
+            _currentBuilding = null;
         }
     }
 
