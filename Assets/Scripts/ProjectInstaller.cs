@@ -2,6 +2,7 @@ using Builders;
 using Data;
 using Grid;
 using Grid.Cells;
+using InputHandlers;
 using UnityEngine;
 using Zenject;
 
@@ -12,16 +13,22 @@ public class ProjectInstaller : MonoInstaller
     [SerializeField] private CoroutinePerformer _coroutineStarter;
     [SerializeField] private GridController _gridController;
     [SerializeField] private DataLoader _dataLoader;
+    [SerializeField] private PCInputHandler _inputHandler;
 
     public override void InstallBindings()
     {
         BindData();
         BindGrid();
         BindBuilders();
-
+        BindInput();
         Container.Bind<CoroutinePerformer>().FromInstance(_coroutineStarter).AsSingle();
     }
 
+    private void BindInput()
+    {
+        Container.BindInterfacesAndSelfTo<IInputHandler>().FromInstance(_inputHandler).AsSingle();
+    }
+    
     private void BindData()
     {
         Container.Bind<DataLoader>().FromInstance(_dataLoader).AsSingle();
@@ -36,7 +43,7 @@ public class ProjectInstaller : MonoInstaller
 
     private void BindGrid()
     {
-        Container.Bind<GridController>().FromInstance(_gridController).AsSingle();
+        Container.BindInterfacesAndSelfTo<GridController>().FromInstance(_gridController).AsSingle();
         Container.Bind<GridView>().FromInstance(_gridView).AsSingle();
         Container.Bind<GridModel>().AsSingle();
         Container.Bind<GridViewShower>().AsSingle();

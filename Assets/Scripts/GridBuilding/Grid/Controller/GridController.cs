@@ -9,7 +9,7 @@ using Zenject;
 
 namespace Grid
 {
-    public class GridController : MonoBehaviour
+    public class GridController : MonoBehaviour, IInitializable, IDisposable
     {
         [SerializeField] private Vector3 _startPosition;
         [SerializeField] private Vector2Int _gridSize;
@@ -22,29 +22,6 @@ namespace Grid
 
         private Building _currentBuilding;
         private Vector2Int _currentBuildingPositionOnGrid;
-
-        private void Start()
-        {
-            _gridModel.SetSize(_gridSize.x, _gridSize.y);
-            _gridView.Init(_gridSize, _startPosition, 1);
-        }
-
-        private void OnEnable()
-        {
-            _buildHandler.BuildingCreated += OnBuildingCreated;
-            _buildHandler.Ticked += OnTicked;
-            _buildHandler.BuildingPlaced += OnBuildingPlaced;
-            _dataLoader.CellsLoaded += OnCellsLoaded;
-        }
-
-        private void OnDisable()
-        {
-            _buildHandler.BuildingCreated -= OnBuildingCreated;
-            _buildHandler.Ticked -= OnTicked;
-            _buildHandler.BuildingPlaced -= OnBuildingPlaced;
-            
-            _dataLoader.CellsLoaded -= OnCellsLoaded;
-        }
 
         [Inject]
         public void OnConstruct(GridView gridView, GridModel gridModel, BuildHandler buildHandler, CellColorChanger cellColorChanger, DataLoader dataLoader)
@@ -90,8 +67,28 @@ namespace Grid
 
         private Vector2Int GetCurrentBuilldingPositionOnGrid()
         {
-            return new Vector2Int(Mathf.RoundToInt(_currentBuilding.transform.position.x - _currentBuilding.HalfSize.x - _startPosition.x),
-                Mathf.RoundToInt(_currentBuilding.transform.position.z - _currentBuilding.HalfSize.z - _startPosition.z));
+            return new Vector2Int(Mathf.FloorToInt(_currentBuilding.transform.position.x - _currentBuilding.HalfSize.x - _startPosition.x),
+                Mathf.FloorToInt(_currentBuilding.transform.position.z - _currentBuilding.HalfSize.z - _startPosition.z));
+        }
+
+        public void Initialize()
+        {
+            _buildHandler.BuildingCreated += OnBuildingCreated;
+            _buildHandler.Ticked += OnTicked;
+            _buildHandler.BuildingPlaced += OnBuildingPlaced;
+            _dataLoader.CellsLoaded += OnCellsLoaded;
+            
+            _gridModel.SetSize(_gridSize.x, _gridSize.y);
+            _gridView.Init(_gridSize, _startPosition, 1);
+        }
+
+        public void Dispose()
+        {
+            _buildHandler.BuildingCreated -= OnBuildingCreated;
+            _buildHandler.Ticked -= OnTicked;
+            _buildHandler.BuildingPlaced -= OnBuildingPlaced;
+            
+            _dataLoader.CellsLoaded -= OnCellsLoaded;
         }
     }
 }

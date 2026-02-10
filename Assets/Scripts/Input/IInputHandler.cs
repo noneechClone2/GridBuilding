@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
 
-namespace Inputa
+namespace InputHandlers
 {
     public interface IInputHandler 
     {
-        public event Action ButtonPressed;
-        public event Action<Vector3> ButtonDragged;
-        public event Action ButtonUnpressed;
+        public event Action MouseButtonPressed;
+        public event Action MouseDragged;
+
+        public event Action MouseButtonUnpressed;
     }
 }
