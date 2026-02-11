@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Buildings;
 using Grid;
+using Zenject;
 
 namespace Builders
 {
@@ -16,6 +17,7 @@ namespace Builders
         [SerializeField] private GridView _gridView;
 
         private Building _currentBuilding;
+        private BuildingData _buildingData;
 
         private void Update()
         {
@@ -33,13 +35,19 @@ namespace Builders
             }
         }
 
+        [Inject]
+        public void OnConstruct(BuildingData buildingData)
+        {
+            _buildingData = buildingData;
+        }
+
         public void CreateBuilding(Building buildingPrefab)
         {
             if (buildingPrefab == null)
                 throw new Exception("Empty building prefab");
 
             _currentBuilding = Instantiate(buildingPrefab, _buildingsParentTransform);
-            _currentBuilding.OnCreated();
+            _currentBuilding.OnCreated(_buildingData);
 
             BuildingCreated?.Invoke(_currentBuilding);
         }

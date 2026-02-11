@@ -79,7 +79,7 @@ namespace Grid
             _dataLoader.CellsLoaded += OnCellsLoaded;
             
             _gridModel.SetSize(_gridSize.x, _gridSize.y);
-            _gridView.Init(_gridSize, _startPosition, 1);
+            _gridView.Init(_gridSize, _startPosition, 0.3f);
         }
 
         public void Dispose()

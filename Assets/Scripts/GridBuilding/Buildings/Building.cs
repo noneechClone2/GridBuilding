@@ -1,53 +1,48 @@
 using Grid.Cells;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Buildings
 {
     public class Building : MonoBehaviour
     {
-        private readonly Color DefaultColor = new Color(10, 10, 10);
-
         [SerializeField] private List<Cell> _occupiedCells; 
 
         [SerializeField] private Collider _collider;
         [SerializeField] private Renderer _renderer;
-
-        [SerializeField] private Material _defaultMaterial;
-        [SerializeField] private Material _shadesMaterial;
-        [SerializeField] private Material _editModMaterial;
-
-        [SerializeField] private Color _availableColor;
-        [SerializeField] private Color _unavailableColor;
-
-        [SerializeField] public BuildingAvailableTypes _type;
-
-        public BuildingAvailableTypes Type => _type;
-        public Vector3 HalfSize => _collider.bounds.size / 2;
+        
+        private BuildingData _buildingData;
+        
+        [field: SerializeField] public int _id { get; set; }
+        
         public IReadOnlyCollection<Cell> OccupiedCells => _occupiedCells;
-
+        public Vector3 HalfSize => _collider.bounds.size / 2;
+        
         public void Place()
         {
-            _renderer.SetMaterials(new() { _defaultMaterial, _shadesMaterial });
-            _renderer.materials[0].SetColor("_Color", DefaultColor);
+            _renderer.SetMaterials(new() { _buildingData.DefaultMaterial, _buildingData.ShadesMaterial });
+            _renderer.materials[0].SetColor("_Color", _buildingData.DefaultColor);
         }
 
         public void SetPosition(Vector3 position)
         {
-            transform.position = position + _collider.bounds.size / 2;
+            transform.position = position + HalfSize;
         }
 
         public void ChangeAvailability(bool isAvailable)
         {
             if (isAvailable)
-                _renderer.materials[0].SetColor("_Color", _availableColor);
+                _renderer.materials[0].SetColor("_Color", _buildingData.AvailableColor);
             else
-                _renderer.materials[0].SetColor("_Color", _unavailableColor);
+                _renderer.materials[0].SetColor("_Color", _buildingData.UnavailableColor);
         }
 
-        public void OnCreated()
+        public void OnCreated(BuildingData buildingData)
         {
-            _renderer.SetMaterials(new() { _editModMaterial, _shadesMaterial });
+            _buildingData = buildingData;
+
+            _renderer.SetMaterials(new() { _buildingData.EditModMaterial, _buildingData.ShadesMaterial });
             SetPosition(new Vector3(0, 0, 0));
         }
     }

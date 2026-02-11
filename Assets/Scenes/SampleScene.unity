@@ -891,6 +891,7 @@ MonoBehaviour:
   _gridController: {fileID: 1433251629}
   _dataLoader: {fileID: 1269623229}
   _inputHandler: {fileID: 147104295}
+  _buildingData: {fileID: 11400000, guid: 29c099516c140f541929544e6cf8f274, type: 2}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0

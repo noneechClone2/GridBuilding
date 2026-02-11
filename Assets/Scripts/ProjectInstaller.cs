@@ -1,4 +1,5 @@
 using Builders;
+using Buildings;
 using Data;
 using Grid;
 using Grid.Cells;
@@ -14,6 +15,7 @@ public class ProjectInstaller : MonoInstaller
     [SerializeField] private GridController _gridController;
     [SerializeField] private DataLoader _dataLoader;
     [SerializeField] private PCInputHandler _inputHandler;
+    [SerializeField] private BuildingData _buildingData;
 
     public override void InstallBindings()
     {
@@ -32,6 +34,7 @@ public class ProjectInstaller : MonoInstaller
     private void BindData()
     {
         Container.Bind<DataLoader>().FromInstance(_dataLoader).AsSingle();
+        Container.Bind<BuildingData>().FromInstance(_buildingData).AsSingle();
         Container.Bind<BaseStorage>().AsSingle();
     }
 
