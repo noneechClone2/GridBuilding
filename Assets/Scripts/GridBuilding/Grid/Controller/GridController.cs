@@ -11,33 +11,22 @@ namespace Grid
 {
     public class GridController : MonoBehaviour, IInitializable, IDisposable
     {
-        [SerializeField] private Vector3 _startPosition;
-        [SerializeField] private Vector2Int _gridSize;
-
         private GridView _gridView;
         private GridModel _gridModel;
-        private CellColorChanger _cellColorChanger;
         private BuildHandler _buildHandler;
-        private DataLoader _dataLoader;
 
         private Building _currentBuilding;
         private Vector2Int _currentBuildingPositionOnGrid;
+        
+        [field: SerializeField] public Vector2Int GridSize {get; private set;}
+        [field: SerializeField] public Vector3 StartPosition {get; private set;}
 
         [Inject]
-        public void OnConstruct(GridView gridView, GridModel gridModel, BuildHandler buildHandler, CellColorChanger cellColorChanger, DataLoader dataLoader)
+        public void OnConstruct(GridView gridView, GridModel gridModel, BuildHandler buildHandler)
         {
             _gridView = gridView;
             _gridModel = gridModel;
             _buildHandler = buildHandler;
-            _dataLoader = dataLoader;
-            _cellColorChanger = cellColorChanger;
-        }
-
-        private void OnCellsLoaded(List<List<Cell>> cells)
-        {
-            _gridModel.SetCellsCollection(cells);
-            _gridView.CellsLoaded(cells);
-            _cellColorChanger.CellCollectionLoaded(cells);
         }
 
         private void OnBuildingCreated(Building building)
@@ -67,8 +56,8 @@ namespace Grid
 
         private Vector2Int GetCurrentBuilldingPositionOnGrid()
         {
-            return new Vector2Int(Mathf.FloorToInt(_currentBuilding.transform.position.x - _currentBuilding.HalfSize.x - _startPosition.x),
-                Mathf.FloorToInt(_currentBuilding.transform.position.z - _currentBuilding.HalfSize.z - _startPosition.z));
+            return new Vector2Int(Mathf.FloorToInt(_currentBuilding.transform.position.x - _currentBuilding.HalfSize.x - StartPosition.x),
+                Mathf.FloorToInt(_currentBuilding.transform.position.z - _currentBuilding.HalfSize.z - StartPosition.z));
         }
 
         public void Initialize()
@@ -76,10 +65,9 @@ namespace Grid
             _buildHandler.BuildingCreated += OnBuildingCreated;
             _buildHandler.Ticked += OnTicked;
             _buildHandler.BuildingPlaced += OnBuildingPlaced;
-            _dataLoader.CellsLoaded += OnCellsLoaded;
             
-            _gridModel.SetSize(_gridSize.x, _gridSize.y);
-            _gridView.Init(_gridSize, _startPosition, 0.3f);
+            _gridModel.SetSize(GridSize.x, GridSize.y);
+            _gridView.Init(GridSize, StartPosition, 0.3f);
         }
 
         public void Dispose()
@@ -87,8 +75,6 @@ namespace Grid
             _buildHandler.BuildingCreated -= OnBuildingCreated;
             _buildHandler.Ticked -= OnTicked;
             _buildHandler.BuildingPlaced -= OnBuildingPlaced;
-            
-            _dataLoader.CellsLoaded -= OnCellsLoaded;
         }
     }
 }

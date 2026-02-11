@@ -49,17 +49,14 @@ MonoBehaviour:
   - AvailableBuildingType: 1
     XPosition: 0
     YPosition: 0
+    CurrentBuildingId: 0
   - AvailableBuildingType: 1
     XPosition: 1
     YPosition: 0
+    CurrentBuildingId: 0
   _collider: {fileID: 588664704971071335}
   _renderer: {fileID: 3493173504550358722}
-  _defaultMaterial: {fileID: 2100000, guid: 4a371bf645542cf46808cccde16ac2c2, type: 2}
-  _shadesMaterial: {fileID: 0}
-  _editModMaterial: {fileID: 2100000, guid: 0df618b1745582a48a2af191ce91426f, type: 2}
-  _availableColor: {r: 0, g: 0.5019608, b: 1, a: 0}
-  _unavailableColor: {r: 1, g: 0.2216981, b: 0.2216981, a: 0}
-  _type: 2
+  <Id>k__BackingField: 1
 --- !u!1 &4007096319819106750
 GameObject:
   m_ObjectHideFlags: 0

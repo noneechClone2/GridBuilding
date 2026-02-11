@@ -23,9 +23,10 @@ namespace Grid
             return _cellRenderers[x][y];
         }
 
-        public void CreateCollection(int sizeX, int sizeY, GameObject tilePrefab, float tileScale, Vector3 startPosition, Transform parentTransform = null)
+        public void CreateCollection(int sizeX, int sizeY, GameObject tilePrefab, float tileScale,
+            Vector3 startPosition, Transform parentTransform = null)
         {
-            if(_cells == null)
+            if (_cells == null)
             {
                 _cells = new();
                 _cellRenderers = new();
@@ -33,12 +34,12 @@ namespace Grid
 
             for (int i = 0; i < sizeX; i++)
             {
-                if(_cells.Count <= i)
+                if (_cells.Count <= i)
                 {
                     _cells.Add(new());
                     _cellRenderers.Add(new());
                 }
-                
+
                 for (int j = 0; j < sizeY; j++)
                 {
                     if (_cells[i].Count <= j)
@@ -52,4 +53,3 @@ namespace Grid
         }
     }
 }
-

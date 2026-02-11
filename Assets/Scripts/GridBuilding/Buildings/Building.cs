@@ -14,10 +14,15 @@ namespace Buildings
         
         private BuildingData _buildingData;
         
-        [field: SerializeField] public int _id { get; set; }
+        [field: SerializeField] public int Id { get; set; }
         
         public IReadOnlyCollection<Cell> OccupiedCells => _occupiedCells;
         public Vector3 HalfSize => _collider.bounds.size / 2;
+
+        public void Init(BuildingData buildingData)
+        {
+            _buildingData = buildingData;
+        }
         
         public void Place()
         {
@@ -38,10 +43,8 @@ namespace Buildings
                 _renderer.materials[0].SetColor("_Color", _buildingData.UnavailableColor);
         }
 
-        public void OnCreated(BuildingData buildingData)
+        public void OnCreated()
         {
-            _buildingData = buildingData;
-
             _renderer.SetMaterials(new() { _buildingData.EditModMaterial, _buildingData.ShadesMaterial });
             SetPosition(new Vector3(0, 0, 0));
         }

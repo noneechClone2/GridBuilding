@@ -11,19 +11,20 @@ namespace Grid.Cells
     {
         [JsonConverter(typeof(StringEnumConverter))] [field: SerializeField]
         public BuildingAvailableTypes AvailableBuildingType;
+
         [field: SerializeField] public int XPosition;
         [field: SerializeField] public int YPosition;
-        
-        private Building _currentBuilding;
+        [field: SerializeField] public int CurrentBuildingId = -1;
 
         public void SetCellPosition(int x, int y)
         {
             XPosition = x;
             YPosition = y;
         }
-        public void SetCurrentBuilding(Building building)
+
+        public void SetCurrentBuilding(int buildingId)
         {
-            _currentBuilding = building;
+            CurrentBuildingId = buildingId;
         }
 
         public void SetAvailableBuildingType(BuildingAvailableTypes buildingType)
@@ -32,4 +33,3 @@ namespace Grid.Cells
         }
     }
 }
-

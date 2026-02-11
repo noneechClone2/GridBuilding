@@ -36,7 +36,7 @@ namespace Grid
             PrepareCells(startPosition);
         }
 
-        public void CellsLoaded(List<List<Cell>> cells)
+        public void SetCellCollection(List<List<Cell>> cells)
         {
             _gridSize = new Vector2Int(cells.Count, cells[0].Count);
             

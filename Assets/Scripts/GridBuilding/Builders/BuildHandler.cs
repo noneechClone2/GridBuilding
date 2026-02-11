@@ -15,7 +15,7 @@ namespace Builders
 
         [SerializeField] private Transform _buildingsParentTransform;
         [SerializeField] private GridView _gridView;
-
+        
         private Building _currentBuilding;
         private BuildingData _buildingData;
 
@@ -47,7 +47,8 @@ namespace Builders
                 throw new Exception("Empty building prefab");
 
             _currentBuilding = Instantiate(buildingPrefab, _buildingsParentTransform);
-            _currentBuilding.OnCreated(_buildingData);
+            _currentBuilding.Init(_buildingData);
+            _currentBuilding.OnCreated();
 
             BuildingCreated?.Invoke(_currentBuilding);
         }

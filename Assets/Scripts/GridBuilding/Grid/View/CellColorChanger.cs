@@ -22,7 +22,7 @@ namespace Grid.Cells
             _gridModel = gridModel;
         }
 
-        public void CellCollectionLoaded(List<List<Cell>> cells)
+        public void SetCellCollection(List<List<Cell>> cells)
         {
             for (int x = 0; x < cells.Count; x++)
             {

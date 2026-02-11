@@ -12,7 +12,7 @@ namespace Grid
 
         private List<List<Cell>> _cells;
 
-        public IReadOnlyCollection<IReadOnlyCollection<Cell>> Cells =>  _cells;
+        public IReadOnlyCollection<IReadOnlyCollection<Cell>> Cells => _cells;
 
         private BuildingAvailableTypes _currentCellAvailableType;
         private int _currentCellXPosition;
@@ -29,15 +29,14 @@ namespace Grid
                 for (int j = 0; j < sizeY; j++)
                 {
                     if (_cells[i].Count <= j)
-                    {
                         _cells[i].Add(new Cell());
-                        _cells[i][j].SetCellPosition(i, j);
-                        _cells[i][j].SetAvailableBuildingType(BuildingAvailableTypes.Everything);
-                    }
+
+                    _cells[i][j].SetCellPosition(i, j);
+                    _cells[i][j].SetAvailableBuildingType(BuildingAvailableTypes.Everything);
                 }
             }
         }
-        
+
         public bool IsGridsFree(int x, int y, Building building)
         {
             if (x < 0 || y < 0 || x >= _cells.Count || y >= _cells[0].Count)
@@ -70,13 +69,14 @@ namespace Grid
 
         public void PlaceBuilding(int x, int y, Building building)
         {
-            _cells[x][y].SetCurrentBuilding(building);
+            _cells[x][y].SetCurrentBuilding(building.Id);
             foreach (var ocuppiedCell in building.OccupiedCells)
             {
                 _currentCellXPosition = x + ocuppiedCell.XPosition;
                 _currentCellYPosition = y + ocuppiedCell.YPosition;
 
-                _cells[_currentCellXPosition][_currentCellYPosition].SetAvailableBuildingType(ocuppiedCell.AvailableBuildingType);
+                _cells[_currentCellXPosition][_currentCellYPosition]
+                    .SetAvailableBuildingType(ocuppiedCell.AvailableBuildingType);
                 CellAvailabilityChanged?.Invoke(_currentCellXPosition, _currentCellYPosition, false,
                     ocuppiedCell.AvailableBuildingType);
             }
@@ -85,7 +85,7 @@ namespace Grid
         public void SetCellsCollection(List<List<Cell>> cells)
         {
             _cells = cells;
-            
+
             CellsLoaded?.Invoke(cells);
         }
     }

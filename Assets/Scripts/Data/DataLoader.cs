@@ -29,7 +29,6 @@ namespace Data
 
         public void SaveData()
         {
-            Debug.Log($"Saving data {_gridModel.Cells.Count}");
             _baseStorage.Save<IReadOnlyCollection<IReadOnlyCollection<Cell>>>(
                 Path.Combine(BaseFolderPath, CellStorageFilePath), _gridModel.Cells);
         }

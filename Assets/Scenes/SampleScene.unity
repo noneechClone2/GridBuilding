@@ -191,12 +191,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 96967260}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.62, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.74882, y: 3.62, z: -0.75402}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1787743524}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &142959743
 GameObject:
@@ -892,6 +892,7 @@ MonoBehaviour:
   _dataLoader: {fileID: 1269623229}
   _inputHandler: {fileID: 147104295}
   _buildingData: {fileID: 11400000, guid: 29c099516c140f541929544e6cf8f274, type: 2}
+  _buildingsLoadHandler: {fileID: 1293554954}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1695,6 +1696,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1109423107}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1293554952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1293554953}
+  - component: {fileID: 1293554954}
+  m_Layer: 0
+  m_Name: BuldingLoadingHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1293554953
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1293554952}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1365464850}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1293554954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1293554952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b19216bc2da44eba5ca0d8cccae4298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Buildings.BuildingsLoadHandler
+  _buildingPrefabs:
+  - {fileID: 986848536696400092, guid: aa22ea545a7a1e54581f49d39c98dfe8, type: 3}
+  - {fileID: 6142735485878874130, guid: d45fa232db04cff4db55f8ef3a4251da, type: 3}
 --- !u!1 &1327476810
 GameObject:
   m_ObjectHideFlags: 0
@@ -1828,6 +1876,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1327476810}
   m_CullTransparentMesh: 1
+--- !u!1 &1365464849
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1365464850}
+  m_Layer: 0
+  m_Name: Loaders
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1365464850
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365464849}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1293554953}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1433251626
 GameObject:
   m_ObjectHideFlags: 0
@@ -1886,8 +1966,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 091af0f5293189940a0b26078a830ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grid.GridController
-  _startPosition: {x: -5, y: 0.1, z: -5}
-  _gridSize: {x: 10, y: 10}
+  <GridSize>k__BackingField: {x: 10, y: 10}
+  <StartPosition>k__BackingField: {x: -5, y: 0.1, z: -5}
 --- !u!1 &1573330160
 GameObject:
   m_ObjectHideFlags: 0
@@ -2573,6 +2653,7 @@ Transform:
   m_Children:
   - {fileID: 410087041}
   - {fileID: 832575519}
+  - {fileID: 96967263}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2062792081
@@ -3158,6 +3239,6 @@ SceneRoots:
   - {fileID: 2062792085}
   - {fileID: 1109423107}
   - {fileID: 2088680101}
-  - {fileID: 96967263}
   - {fileID: 422555858}
   - {fileID: 1787743524}
+  - {fileID: 1365464850}

@@ -16,6 +16,7 @@ public class ProjectInstaller : MonoInstaller
     [SerializeField] private DataLoader _dataLoader;
     [SerializeField] private PCInputHandler _inputHandler;
     [SerializeField] private BuildingData _buildingData;
+    [SerializeField] private BuildingsLoadHandler _buildingsLoadHandler;
 
     public override void InstallBindings()
     {
@@ -36,6 +37,8 @@ public class ProjectInstaller : MonoInstaller
         Container.Bind<DataLoader>().FromInstance(_dataLoader).AsSingle();
         Container.Bind<BuildingData>().FromInstance(_buildingData).AsSingle();
         Container.Bind<BaseStorage>().AsSingle();
+        Container.BindInterfacesAndSelfTo<BuildingsLoadHandler>().FromInstance(_buildingsLoadHandler).AsSingle();
+        Container.BindInterfacesAndSelfTo<CellsLoadingHandler>().AsSingle().NonLazy();
     }
 
     private void BindBuilders()
