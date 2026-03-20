@@ -1,3 +1,4 @@
+using _Scripts.Data;
 using Builders;
 using Buildings;
 using Data.Loaders;
@@ -13,9 +14,9 @@ namespace App.Initializing.Installers
         [SerializeField] private BuildHandler _buildHandler;
         [SerializeField] private GridView _gridView;
         [SerializeField] private BuildingData _buildingData;
-        [SerializeField] private GridLoader _gridLoader;
         [SerializeField] private CoroutinePerformer _coroutinePerformer;
         [SerializeField] private BuildingsPrefabsCollection _buildingsPrefabsCollection;
+        [SerializeField] private GameSaveLoadService _gameSaveLoadService;
         
         public override void InstallBindings()
         {
@@ -35,10 +36,11 @@ namespace App.Initializing.Installers
 
         private void BindData()
         {
-            Container.Bind<GridLoader>().FromInstance(_gridLoader).AsSingle();
+            Container.Bind<GridLoader>().AsSingle();
             Container.Bind<BuildingData>().FromInstance(_buildingData).AsSingle();
             Container.BindInterfacesAndSelfTo<BuildingsLoadHandler>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<CellsLoadHandler>().AsSingle().NonLazy();
+            Container.Bind<GameSaveLoadService>().FromInstance(_gameSaveLoadService).AsSingle();
         }
 
         private void BindGrid()

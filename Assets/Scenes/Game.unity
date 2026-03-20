@@ -675,9 +675,9 @@ MonoBehaviour:
   _buildHandler: {fileID: 1711364063}
   _gridView: {fileID: 1433251628}
   _buildingData: {fileID: 11400000, guid: 29c099516c140f541929544e6cf8f274, type: 2}
-  _gridLoader: {fileID: 1827641076}
   _coroutinePerformer: {fileID: 161414015}
   _buildingsPrefabsCollection: {fileID: 796500002}
+  _gameSaveLoadService: {fileID: 2140855676}
 --- !u!1 &608325064
 GameObject:
   m_ObjectHideFlags: 0
@@ -1363,7 +1363,6 @@ Transform:
   - {fileID: 142959744}
   - {fileID: 1711364062}
   - {fileID: 161414016}
-  - {fileID: 1269623230}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1135207484
@@ -1695,50 +1694,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217483051}
   m_CullTransparentMesh: 1
---- !u!1 &1269623228
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1269623230}
-  - component: {fileID: 1269623229}
-  m_Layer: 0
-  m_Name: DataLoader
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1269623229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269623228}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3d36139ed0c41589482506b2900ef9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Data.DataLoader
---- !u!4 &1269623230
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269623228}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.38455, y: 0, z: 12.33868}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1109423107}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1327476810
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,9 +1777,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1827641076}
-        m_TargetAssemblyTypeName: Data.Loaders.GridLoader, Assembly-CSharp
-        m_MethodName: SaveData
+      - m_Target: {fileID: 2140855676}
+        m_TargetAssemblyTypeName: _Scripts.Data.GameSaveLoadService, Assembly-CSharp
+        m_MethodName: Save
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2397,9 +2352,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1827641076}
-        m_TargetAssemblyTypeName: Data.Loaders.GridLoader, Assembly-CSharp
-        m_MethodName: LoadData
+      - m_Target: {fileID: 2140855676}
+        m_TargetAssemblyTypeName: _Scripts.Data.GameSaveLoadService, Assembly-CSharp
+        m_MethodName: Load
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2618,50 +2573,6 @@ Transform:
   - {fileID: 96967263}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1827641074
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1827641075}
-  - component: {fileID: 1827641076}
-  m_Layer: 0
-  m_Name: GridLoader
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1827641075
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1827641074}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2140855675}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1827641076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1827641074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3d36139ed0c41589482506b2900ef9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Data.Loaders.GridLoader
 --- !u!1 &2062792081
 GameObject:
   m_ObjectHideFlags: 0
@@ -2915,6 +2826,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2140855675}
+  - component: {fileID: 2140855676}
   m_Layer: 0
   m_Name: Loaders
   m_TagString: Untagged
@@ -2934,10 +2846,21 @@ Transform:
   m_LocalPosition: {x: 5.21767, y: -0, z: 32.80173}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1827641075}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2140855676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140855674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2dc67807b72455ba94c3a36e8c0c007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Scripts.Data.GameSaveLoadService
 --- !u!1001 &4155571268268491306
 PrefabInstance:
   m_ObjectHideFlags: 0

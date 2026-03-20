@@ -1,17 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using Grid;
-using Grid.Cells;
 using UnityEngine;
 
 namespace Data.Loaders
 {
-    public abstract class BaseDataLoader<T> : MonoBehaviour
+    public abstract class BaseDataLoader
     {
         protected const string BaseFolderPath = "Data";
-
-        public abstract event Action<T> DataLoaded;
 
         protected BaseStorage _baseStorage;
 

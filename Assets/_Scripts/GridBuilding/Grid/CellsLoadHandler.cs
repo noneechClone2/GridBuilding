@@ -7,16 +7,15 @@ using Zenject;
 
 namespace Grid.Cells
 {
-    public class CellsLoadHandler : IInitializable, IDisposable
+    public class CellsLoadHandler : IDisposable
     {
         private GridView _gridView;
         private GridModel _gridModel;
         private CellColorChanger _cellColorChanger;
         private BuildingsLoadHandler _buildingLoadHandler;
         private GridLoader _dataLoader;
-
-        [Inject]
-        public void OnConstruct(GridView gridView, GridModel gridModel, CellColorChanger cellColorChanger,
+        
+        public CellsLoadHandler(GridView gridView, GridModel gridModel, CellColorChanger cellColorChanger,
             GridLoader dataLoader, BuildingsLoadHandler buildingLoadHandler)
         {
             _gridView = gridView;
@@ -24,6 +23,11 @@ namespace Grid.Cells
             _dataLoader = dataLoader;
             _cellColorChanger = cellColorChanger;
             _buildingLoadHandler = buildingLoadHandler;
+        }
+
+        public void Initialize()
+        {
+            _dataLoader.DataLoaded += OnCellsLoaded;
         }
 
         private void OnCellsLoaded(List<List<Cell>> cells)
@@ -42,11 +46,6 @@ namespace Grid.Cells
             _gridModel.SetCellsCollection(cells);
             _gridView.SetCellCollection(cells);
             _cellColorChanger.SetCellCollection(cells);
-        }
-
-        public void Initialize()
-        {
-            _dataLoader.DataLoaded += OnCellsLoaded;
         }
 
         public void Dispose()

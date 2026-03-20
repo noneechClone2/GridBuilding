@@ -6,9 +6,9 @@ using Grid.Cells;
 
 namespace Data.Loaders
 {
-    public class GridLoader : BaseDataLoader<List<List<Cell>>>
+    public class GridLoader : BaseDataLoader
     {
-        public override event Action<List<List<Cell>>> DataLoaded;
+        public event Action<List<List<Cell>>> DataLoaded;
         
         private const string CellStorageFilePath = "CellStorage";
 
@@ -24,6 +24,11 @@ namespace Data.Loaders
 
         public override void SaveData()
         {
+            if (_baseStorage == null)
+            {
+                UnityEngine.Debug.Log(1);
+            }
+            
             _baseStorage.Save<IReadOnlyCollection<IReadOnlyCollection<Cell>>>(
                 Path.Combine(BaseFolderPath, CellStorageFilePath), _gridModel.Cells);
         }
