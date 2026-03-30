@@ -74,11 +74,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0283cdd99fb84f947a937729142b4375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::App.Initializing.ProjectInstaller
-  _gridView: {fileID: 0}
-  _buildHandler: {fileID: 0}
-  _coroutineStarter: {fileID: 0}
-  _gridController: {fileID: 0}
-  _dataLoader: {fileID: 0}
-  _inputHandler: {fileID: 0}
-  _buildingData: {fileID: 0}
-  _buildingsLoadHandler: {fileID: 0}

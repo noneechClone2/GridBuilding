@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Grid
+namespace GridBuilding.Grid.View
 {
     public class GridCollection
     {

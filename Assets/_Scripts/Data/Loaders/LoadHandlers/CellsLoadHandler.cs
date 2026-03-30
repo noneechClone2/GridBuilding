@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Buildings;
 using Data;
 using Data.Loaders;
-using Zenject;
+using GridBuilding.Grid.View;
 
-namespace Grid.Cells
+namespace GridBuilding.Grid.Cells
 {
     public class CellsLoadHandler : IDisposable
     {

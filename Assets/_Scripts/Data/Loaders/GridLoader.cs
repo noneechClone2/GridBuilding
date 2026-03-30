@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using Grid;
-using Grid.Cells;
+using GridBuilding.Grid;
+using GridBuilding.Grid.Cells;
 
 namespace Data.Loaders
 {
@@ -16,7 +15,7 @@ namespace Data.Loaders
         
         private GridModel _gridModel;
         
-        public GridLoader(GridModel gridModel, BaseStorage baseStorage) :  base(baseStorage)
+        public GridLoader(GridModel gridModel, IStorage storage) :  base(storage)
         {
             _gridModel = gridModel;
         }
@@ -24,18 +23,12 @@ namespace Data.Loaders
 
         public override void SaveData()
         {
-            if (_baseStorage == null)
-            {
-                UnityEngine.Debug.Log(1);
-            }
-            
-            _baseStorage.Save<IReadOnlyCollection<IReadOnlyCollection<Cell>>>(
-                Path.Combine(BaseFolderPath, CellStorageFilePath), _gridModel.Cells);
+            _storage.Save<IReadOnlyCollection<IReadOnlyCollection<Cell>>>(CellStorageFilePath, _gridModel.Cells);
         }
 
         public override void LoadData()
         {
-            _cells = _baseStorage.Load<List<List<Cell>>>(Path.Combine(BaseFolderPath, CellStorageFilePath));
+            _cells = _storage.Load<List<List<Cell>>>(CellStorageFilePath);
 
             DataLoaded?.Invoke(_cells);
         }

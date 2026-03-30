@@ -1,10 +1,11 @@
-using Buildings;
 using System;
 using System.Collections.Generic;
+using GridBuilding.Buildings;
+using GridBuilding.Grid.Cells;
 using UnityEngine;
 using Zenject;
 
-namespace Grid.Cells
+namespace GridBuilding.Grid.View
 {
     public class CellColorChanger : IInitializable, IDisposable
     {

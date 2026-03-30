@@ -1,9 +1,6 @@
-using Builders;
 using Cysharp.Threading.Tasks;
-using Grid;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Zenject;
 
 namespace App.Initializing
 {
@@ -15,7 +12,6 @@ namespace App.Initializing
         
         public ProjectPreparer()
         {
-            
             Initialize().Forget();
         }
 

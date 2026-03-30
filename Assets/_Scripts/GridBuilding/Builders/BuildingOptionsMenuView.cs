@@ -1,11 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Buildings
+namespace GridBuilding.Buildings
 {
     public class BuildingOptionsMenuView : MonoBehaviour
     {
-        private Building _currentBuilding;
+        
 
     }
 }

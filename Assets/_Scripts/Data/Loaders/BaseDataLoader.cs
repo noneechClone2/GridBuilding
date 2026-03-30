@@ -5,13 +5,11 @@ namespace Data.Loaders
 {
     public abstract class BaseDataLoader
     {
-        protected const string BaseFolderPath = "Data";
+        protected IStorage _storage;
 
-        protected BaseStorage _baseStorage;
-
-        public BaseDataLoader(BaseStorage baseStorage)
+        public BaseDataLoader(IStorage storage)
         {
-            _baseStorage = baseStorage;
+            _storage = storage;
         }
 
         public abstract void SaveData();

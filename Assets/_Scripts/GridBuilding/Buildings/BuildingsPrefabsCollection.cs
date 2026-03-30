@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Buildings
+namespace GridBuilding.Buildings
 {
     public class BuildingsPrefabsCollection : MonoBehaviour
     {

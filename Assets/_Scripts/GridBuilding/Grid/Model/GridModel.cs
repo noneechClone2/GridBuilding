@@ -1,9 +1,9 @@
-using Buildings;
-using Grid.Cells;
 using System;
 using System.Collections.Generic;
+using GridBuilding.Buildings;
+using GridBuilding.Grid.Cells;
 
-namespace Grid
+namespace GridBuilding.Grid
 {
     public class GridModel
     {

@@ -1,4 +1,4 @@
-namespace Buildings
+namespace GridBuilding.Buildings
 {
     public enum Rotation
     {

@@ -1,9 +1,7 @@
 using System;
 using System.Runtime.Serialization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
-namespace Buildings
+namespace GridBuilding.Buildings
 { 
     [Serializable]  
     public enum BuildingAvailableTypes

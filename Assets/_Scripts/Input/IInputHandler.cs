@@ -5,8 +5,9 @@ namespace InputHandlers
 {
     public interface IInputHandler 
     {
-        public event Action LeftMouseButtonStartDragging;
+        public event Action BuildingMovingStarted;
         public event Action<Vector3Int> BuildingMoved;
-        public event Action LeftMouseButtonStoppedDragging;
+        public event Action BuildingMovingStopped;
+        public event Action LeftMouseButtonClicked;
     }
 }

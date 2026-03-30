@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
-using Builders;
-using Buildings;
-using Data;
-using Grid.Cells;
+using GridBuilding.Builders;
+using GridBuilding.Buildings;
+using GridBuilding.Grid.View;
 using UnityEngine;
-using Zenject;
 
-namespace Grid
+namespace GridBuilding.Grid
 {
     public class GridController : IDisposable
     {

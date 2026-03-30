@@ -1,20 +1,17 @@
 using System;
 using UnityEngine;
-using Buildings;
-using Grid;
+using GridBuilding.Buildings;
 using Zenject;
 
-namespace Builders
+namespace GridBuilding.Builders
 {
     public class BuildHandler : MonoBehaviour
     {
         public event Action<Building> BuildingCreated;
         public event Action Ticked;
-        public event Action FixedTicked;
         public event Action BuildingPlaced;
 
         [SerializeField] private Transform _buildingsParentTransform;
-        [SerializeField] private GridView _gridView;
         
         private Building _currentBuilding;
         private BuildingData _buildingData;
@@ -27,16 +24,7 @@ namespace Builders
             }
         }
 
-        private void FixedUpdate()
-        {
-            if (_currentBuilding != null)
-            {
-                FixedTicked?.Invoke();
-            }
-        }
-
-        [Inject]
-        public void OnConstruct(BuildingData buildingData)
+        public void Initialize(BuildingData buildingData)
         {
             _buildingData = buildingData;
         }

@@ -1,15 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
 using UnityEngine;
 
-namespace Data
+namespace Data.Storages
 {
-    public class BaseStorage : IStorage
+    public class PersistentDataStorage : IStorage
     {
+        private readonly string BaseFolderPath = Path.Combine(Application.persistentDataPath, "Data");
         private string _path;
         private string _json;
         private string _directory;
@@ -17,9 +15,7 @@ namespace Data
         public void Save<T>(string path, T data, Action<bool> callback = null)
         {
             _path = BuildPath(path);
-
             _json = JsonConvert.SerializeObject(data);
-
             _directory = Path.GetDirectoryName(_path);
 
             if (!Directory.Exists(_directory))
@@ -31,9 +27,6 @@ namespace Data
             {
                 streamWriter.WriteLine(_json);
             }
-
-            data = JsonConvert.DeserializeObject<T>(_json);
-            _json = JsonConvert.SerializeObject(data);
 
             callback?.Invoke(true);
         }
@@ -57,7 +50,7 @@ namespace Data
 
         private string BuildPath(string path)
         {
-            return Path.Combine(Application.persistentDataPath, path);
+            return Path.Combine(BaseFolderPath, path);
         }
     }
 }

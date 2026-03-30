@@ -1,7 +1,7 @@
 using UnityEngine.SceneManagement;
 using Zenject;
 
-namespace App.Initializing
+namespace App.Initializing.Installers
 {
     public class Bootstrapper : MonoInstaller
     {

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Grid.Cells;
+using GridBuilding.Grid.Cells;
 using UnityEngine;
 using Zenject;
 
-namespace Grid
+namespace GridBuilding.Grid.View
 {
     public class GridView : MonoBehaviour
     {

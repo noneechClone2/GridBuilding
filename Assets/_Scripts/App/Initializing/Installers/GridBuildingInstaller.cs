@@ -1,9 +1,11 @@
-using _Scripts.Data;
-using Builders;
-using Buildings;
+using Data;
 using Data.Loaders;
-using Grid;
-using Grid.Cells;
+using GridBuilding.Builders;
+using GridBuilding.Buildings;
+using GridBuilding.Grid;
+using GridBuilding.Grid.Cells;
+using GridBuilding.Grid.View;
+using InputHandlers.PlayerInputState;
 using UnityEngine;
 using Zenject;
 
@@ -11,20 +13,25 @@ namespace App.Initializing.Installers
 {
     public class GridBuildingInstaller : MonoInstaller
     {
-        [SerializeField] private BuildHandler _buildHandler;
         [SerializeField] private GridView _gridView;
+        
+        [SerializeField] private BuildHandler _buildHandler;
         [SerializeField] private BuildingData _buildingData;
-        [SerializeField] private CoroutinePerformer _coroutinePerformer;
         [SerializeField] private BuildingsPrefabsCollection _buildingsPrefabsCollection;
+        
+        [SerializeField] private CoroutinePerformer _coroutinePerformer;
         [SerializeField] private GameSaveLoadService _gameSaveLoadService;
+        [SerializeField] private GridBuildingPlayerInputStateChanger _gridBuildingPlayerInputStateChanger;
         
         public override void InstallBindings()
         {
             BindGrid();
             BindBuilders();
+            BindSavesAndLoads();
             BindData();
             BindCollections();
             BindInitializer();
+            BindInput();
             
             Container.Bind<CoroutinePerformer>().FromInstance(_coroutinePerformer).AsSingle();
         }
@@ -36,8 +43,12 @@ namespace App.Initializing.Installers
 
         private void BindData()
         {
-            Container.Bind<GridLoader>().AsSingle();
             Container.Bind<BuildingData>().FromInstance(_buildingData).AsSingle();
+        }
+
+        private void BindSavesAndLoads()
+        {
+            Container.Bind<GridLoader>().AsSingle();
             Container.BindInterfacesAndSelfTo<BuildingsLoadHandler>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<CellsLoadHandler>().AsSingle().NonLazy();
             Container.Bind<GameSaveLoadService>().FromInstance(_gameSaveLoadService).AsSingle();
@@ -62,6 +73,11 @@ namespace App.Initializing.Installers
         private void BindCollections()
         {
             Container.Bind<BuildingsPrefabsCollection>().FromInstance(_buildingsPrefabsCollection).AsSingle();
+        }
+
+        private void BindInput()
+        {
+            Container.Bind<GridBuildingPlayerInputStateChanger>().FromInstance(_gridBuildingPlayerInputStateChanger).AsSingle();
         }
     }
 }

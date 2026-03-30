@@ -1,12 +1,11 @@
-using Grid;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using Buildings;
 using Zenject;
 using System;
+using GridBuilding.Buildings;
+using GridBuilding.Grid.View;
 using InputHandlers;
 
-namespace Builders
+namespace GridBuilding.Builders
 {
     public class Builder : IInitializable, IDisposable
     {
@@ -29,7 +28,7 @@ namespace Builders
             _buildHandler.BuildingCreated += OnBuildingCreated;
             
             _inputHandler.BuildingMoved += OnLeftMouseButtonDragged;
-            _inputHandler.LeftMouseButtonStartDragging += OnLeftMouseButtonDraggingStarted;
+            _inputHandler.BuildingMovingStarted += OnLeftMouseButtonDraggingStarted;
         }
 
         private void OnLeftMouseButtonDraggingStarted()
@@ -59,7 +58,7 @@ namespace Builders
             _buildHandler.BuildingCreated -= OnBuildingCreated;
             
             _inputHandler.BuildingMoved -= OnLeftMouseButtonDragged;
-            _inputHandler.LeftMouseButtonStartDragging -= OnLeftMouseButtonDraggingStarted;
+            _inputHandler.BuildingMovingStarted -= OnLeftMouseButtonDraggingStarted;
         }
     }
 }

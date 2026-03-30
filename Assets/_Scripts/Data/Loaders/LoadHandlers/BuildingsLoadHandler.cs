@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Grid;
+using GridBuilding.Buildings;
+using GridBuilding.Grid;
 using UnityEngine;
 using Zenject;
 
 
-namespace Buildings
+namespace Data
 {
     public class BuildingsLoadHandler : IInitializable
     {

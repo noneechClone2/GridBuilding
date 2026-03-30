@@ -1,10 +1,10 @@
-using Buildings;
 using System;
+using GridBuilding.Buildings;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using UnityEngine;
 
-namespace Grid.Cells
+namespace GridBuilding.Grid.Cells
 {
     [Serializable]
     public class Cell

@@ -3,7 +3,7 @@ using Data.Loaders;
 using UnityEngine;
 using Zenject;
 
-namespace _Scripts.Data
+namespace Data
 {
     public class GameSaveLoadService : MonoBehaviour
     {

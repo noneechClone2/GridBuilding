@@ -1,4 +1,4 @@
-namespace Grid.Cells
+namespace GridBuilding.Grid.Cells
 {
     public enum CellTypes
     {

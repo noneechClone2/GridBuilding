@@ -1,8 +1,6 @@
-using System.Collections.Generic;
-using Grid.Cells;
 using UnityEngine;
 
-namespace Buildings
+namespace GridBuilding.Buildings
 {
     [CreateAssetMenu(fileName = "BuildingData", menuName = "Scriptable Objects/BuildingData")]
     public class BuildingData : ScriptableObject

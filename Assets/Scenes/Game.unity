@@ -430,6 +430,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 2119840519}
+        m_TargetAssemblyTypeName: InputHandlers.PlayerInputState.GridBuildingPlayerInputStateChanger,
+          Assembly-CSharp
+        m_MethodName: ExitBuildingEditor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &163140440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -678,6 +691,7 @@ MonoBehaviour:
   _coroutinePerformer: {fileID: 161414015}
   _buildingsPrefabsCollection: {fileID: 796500002}
   _gameSaveLoadService: {fileID: 2140855676}
+  _gridBuildingPlayerInputStateChanger: {fileID: 2119840519}
 --- !u!1 &608325064
 GameObject:
   m_ObjectHideFlags: 0
@@ -1537,6 +1551,7 @@ GameObject:
   - component: {fileID: 1217483055}
   - component: {fileID: 1217483054}
   - component: {fileID: 1217483053}
+  - component: {fileID: 1217483056}
   m_Layer: 5
   m_Name: CreateRectangleButton
   m_TagString: Untagged
@@ -1609,12 +1624,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1711364063}
-        m_TargetAssemblyTypeName: Builders.BuildHandler, Assembly-CSharp
+        m_TargetAssemblyTypeName: GridBuilding.Builders.BuildHandler, Assembly-CSharp
         m_MethodName: CreateBuilding
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1418944397329129739, guid: aa22ea545a7a1e54581f49d39c98dfe8, type: 3}
-          m_ObjectArgumentAssemblyTypeName: Buildings.Building, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: GridBuilding.Buildings.Building, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1647,6 +1662,19 @@ MonoBehaviour:
       - m_Target: {fileID: 1433251628}
         m_TargetAssemblyTypeName: Grid.GridView, Assembly-CSharp
         m_MethodName: Show
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2119840519}
+        m_TargetAssemblyTypeName: InputHandlers.PlayerInputState.GridBuildingPlayerInputStateChanger,
+          Assembly-CSharp
+        m_MethodName: EnterBuildingEditor
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1694,6 +1722,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217483051}
   m_CullTransparentMesh: 1
+--- !u!114 &1217483056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217483051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08baf8497f2f7354c9335778890bb685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.Button
+  _isMouseOver: 0
 --- !u!1 &1327476810
 GameObject:
   m_ObjectHideFlags: 0
@@ -2138,12 +2179,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1711364063}
-        m_TargetAssemblyTypeName: Builders.BuildHandler, Assembly-CSharp
+        m_TargetAssemblyTypeName: GridBuilding.Builders.BuildHandler, Assembly-CSharp
         m_MethodName: CreateBuilding
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 6527825734221277707, guid: d45fa232db04cff4db55f8ef3a4251da, type: 3}
-          m_ObjectArgumentAssemblyTypeName: Buildings.Building, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: GridBuilding.Buildings.Building, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2176,6 +2217,19 @@ MonoBehaviour:
       - m_Target: {fileID: 1433251628}
         m_TargetAssemblyTypeName: Grid.GridView, Assembly-CSharp
         m_MethodName: Show
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2119840519}
+        m_TargetAssemblyTypeName: InputHandlers.PlayerInputState.GridBuildingPlayerInputStateChanger,
+          Assembly-CSharp
+        m_MethodName: EnterBuildingEditor
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2268,7 +2322,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Builder
   _buildingsParentTransform: {fileID: 1711364062}
-  _gridView: {fileID: 1433251628}
 --- !u!1 &1715131863
 GameObject:
   m_ObjectHideFlags: 0
@@ -2809,6 +2862,7 @@ RectTransform:
   m_Children:
   - {fileID: 1626898183}
   - {fileID: 1573330161}
+  - {fileID: 2119840518}
   - {fileID: 148044620}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2817,6 +2871,54 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &2119840517
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2119840518}
+  - component: {fileID: 2119840519}
+  m_Layer: 5
+  m_Name: InputStateChanger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2119840518
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119840517}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2088680101}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2119840519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119840517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d50196bb920b4dafbcbad7c78a53c4a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputHandlers.PlayerInputState.PlayerInputStateChanger
 --- !u!1 &2140855674
 GameObject:
   m_ObjectHideFlags: 0
@@ -2828,7 +2930,7 @@ GameObject:
   - component: {fileID: 2140855675}
   - component: {fileID: 2140855676}
   m_Layer: 0
-  m_Name: Loaders
+  m_Name: SaveLoadService
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,9 +1,8 @@
-using Grid.Cells;
 using System.Collections.Generic;
+using GridBuilding.Grid.Cells;
 using UnityEngine;
-using Zenject;
 
-namespace Buildings
+namespace GridBuilding.Buildings
 {
     public class Building : MonoBehaviour
     {
