@@ -7,6 +7,7 @@ using GridBuilding.Grid.Cells;
 using GridBuilding.Grid.View;
 using InputHandlers.PlayerInputState;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace App.Initializing.Installers
@@ -16,7 +17,7 @@ namespace App.Initializing.Installers
         [SerializeField] private GridView _gridView;
         
         [SerializeField] private BuildHandler _buildHandler;
-        [SerializeField] private BuildingData _buildingData;
+        [FormerlySerializedAs("_buildingData")] [SerializeField] private BuildingMaterials buildingMaterials;
         [SerializeField] private BuildingsPrefabsCollection _buildingsPrefabsCollection;
         
         [SerializeField] private CoroutinePerformer _coroutinePerformer;
@@ -43,7 +44,7 @@ namespace App.Initializing.Installers
 
         private void BindData()
         {
-            Container.Bind<BuildingData>().FromInstance(_buildingData).AsSingle();
+            Container.Bind<BuildingMaterials>().FromInstance(buildingMaterials).AsSingle();
         }
 
         private void BindSavesAndLoads()
@@ -66,7 +67,7 @@ namespace App.Initializing.Installers
         
         private void BindBuilders()
         {
-            Container.BindInterfacesAndSelfTo<Builder>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<BuildingMover>().AsSingle().NonLazy();
             Container.Bind<BuildHandler>().FromInstance(_buildHandler).AsSingle();
         }
 
