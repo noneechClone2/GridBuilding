@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using GridBuilding.Buildings;
-using Zenject;
 
 namespace GridBuilding.Builders
 {
@@ -14,7 +13,7 @@ namespace GridBuilding.Builders
         [SerializeField] private Transform _buildingsParentTransform;
         
         private Building _currentBuilding;
-        private BuildingData _buildingData;
+        private BuildingMaterials _buildingMaterials;
 
         private void Update()
         {
@@ -24,9 +23,9 @@ namespace GridBuilding.Builders
             }
         }
 
-        public void Initialize(BuildingData buildingData)
+        public void Initialize(BuildingMaterials buildingMaterials)
         {
-            _buildingData = buildingData;
+            _buildingMaterials = buildingMaterials;
         }
 
         public void CreateBuilding(Building buildingPrefab)
@@ -35,7 +34,7 @@ namespace GridBuilding.Builders
                 throw new Exception("Empty building prefab");
 
             _currentBuilding = Instantiate(buildingPrefab, _buildingsParentTransform);
-            _currentBuilding.Init(_buildingData);
+            _currentBuilding.Init(_buildingMaterials);
             _currentBuilding.OnCreated();
 
             BuildingCreated?.Invoke(_currentBuilding);

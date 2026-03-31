@@ -3,7 +3,7 @@ using UnityEngine;
 namespace GridBuilding.Buildings
 {
     [CreateAssetMenu(fileName = "BuildingData", menuName = "Scriptable Objects/BuildingData")]
-    public class BuildingData : ScriptableObject
+    public class BuildingMaterials : ScriptableObject
     {
         [field: SerializeField] public Material DefaultMaterial { get; private set; }
         [field: SerializeField] public Material ShadesMaterial { get; private set; }

@@ -6,61 +6,81 @@ namespace GridBuilding.Buildings
 {
     public class Building : MonoBehaviour
     {
-        [SerializeField] private List<Cell> _occupiedCells; 
-
+        [SerializeField] private List<Cell> _occupiedCells;
         [SerializeField] private Collider _collider;
         [SerializeField] private Renderer _renderer;
-        
-        private BuildingData _buildingData;
-        
+        [SerializeField] private Transform _buildingTransform;
+
+        private BuildingMaterials _buildingMaterials;
+
         [field: SerializeField] public int Id { get; set; }
-        
+        public Rotation Rotation { get; private set; }
+
         public IReadOnlyCollection<Cell> OccupiedCells => _occupiedCells;
         public Vector3 HalfSize => _collider.bounds.size / 2;
 
-        public void Init(BuildingData buildingData)
+        public void Init(BuildingMaterials buildingMaterials)
         {
-            _buildingData = buildingData;
+            _buildingMaterials = buildingMaterials;
         }
-        
+
         public void Place()
         {
-            _renderer.SetMaterials(new() { _buildingData.DefaultMaterial, _buildingData.ShadesMaterial });
-            _renderer.materials[0].SetColor("_Color", _buildingData.DefaultColor);
+            _renderer.SetMaterials(new() { _buildingMaterials.DefaultMaterial, _buildingMaterials.ShadesMaterial });
+            _renderer.materials[0].SetColor("_Color", _buildingMaterials.DefaultColor);
         }
 
         public void Rotate(Rotation rotation)
         {
-            int xMultiplier = 1;
-            int yMultiplier = 1;
+            int angle;
             
-            if (rotation == Rotation.Horizontal)
-                xMultiplier = -1;
+            if(Rotation == Rotation.Left && rotation == Rotation.Forward)
+                angle = 90;
             else
-                yMultiplier = -1;
+                angle = Mathf.Abs(Rotation - rotation);
             
-            foreach (var cell in _occupiedCells)
+            Debug.Log(angle + " " + rotation);
+
+            _buildingTransform.RotateAround(transform.position, Vector3.up, angle);
+
+            if (angle == 90)
             {
-                cell.SetCellPosition(cell.XPosition * xMultiplier, cell.YPosition * yMultiplier);
+                foreach (var cell in _occupiedCells)
+                {
+                    int x = cell.XPosition;
+
+                    cell.XPosition = cell.YPosition;
+                    cell.YPosition = x;
+
+                    if ((Rotation == Rotation.Left && rotation == Rotation.Forward) ||
+                        (Rotation == Rotation.Right && rotation == Rotation.Backward))
+                    {
+                        cell.YPosition = cell.YPosition * -1;
+                        Debug.Log("Multiplied " + cell.YPosition);
+                    }
+                }
             }
+            
+            Rotation = rotation;
         }
 
         public void SetPosition(Vector3 position)
         {
-            transform.position = position + HalfSize;
+            transform.position = position + new Vector3(0.5f, 0.5f, 0.5f);
         }
 
         public void ChangeAvailability(bool isAvailable)
         {
             if (isAvailable)
-                _renderer.materials[0].SetColor("_Color", _buildingData.AvailableColor);
+                _renderer.materials[0].SetColor("_Color", _buildingMaterials.AvailableColor);
             else
-                _renderer.materials[0].SetColor("_Color", _buildingData.UnavailableColor);
+                _renderer.materials[0].SetColor("_Color", _buildingMaterials.UnavailableColor);
         }
 
         public void OnCreated()
         {
-            _renderer.SetMaterials(new() { _buildingData.EditModMaterial, _buildingData.ShadesMaterial });
+            _renderer.SetMaterials(new() { _buildingMaterials.EditModMaterial, _buildingMaterials.ShadesMaterial });
+            Rotation = Rotation.Forward;
             SetPosition(new Vector3(0, 0, 0));
         }
     }

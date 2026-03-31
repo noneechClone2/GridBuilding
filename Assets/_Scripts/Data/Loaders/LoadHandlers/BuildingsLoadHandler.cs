@@ -15,12 +15,12 @@ namespace Data
 
         private GridController _gridController;
         private Building _currentBuilding;
-        private BuildingData _buildingData;
+        private BuildingMaterials _buildingMaterials;
         
-        public BuildingsLoadHandler(GridController gridController, BuildingData buildingData,  BuildingsPrefabsCollection buildingsPrefabs)
+        public BuildingsLoadHandler(GridController gridController, BuildingMaterials buildingMaterials,  BuildingsPrefabsCollection buildingsPrefabs)
         {
             _gridController = gridController;
-            _buildingData = buildingData;
+            _buildingMaterials = buildingMaterials;
             _buildingsPrefabs = buildingsPrefabs;
         }
 
@@ -34,7 +34,7 @@ namespace Data
 
             _currentBuilding = UnityEngine.Object.Instantiate(_buildingsIdToBuilding[id]);
             _currentBuilding.SetPosition(new Vector3(x + _gridController.StartPosition.x, 0, y + _gridController.StartPosition.z));
-            _currentBuilding.Init(_buildingData);
+            _currentBuilding.Init(_buildingMaterials);
             _currentBuilding.Place();
         }
 

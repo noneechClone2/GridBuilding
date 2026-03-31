@@ -19,14 +19,13 @@ namespace GridBuilding.Grid.View
         public Vector3 StartPosition { get; private set; }
         public Vector3 EndPosition { get; private set; }
 
-        [Inject]
-        public void OnConstruct(GridViewShower gridViewShower, GridCollection gridCollection, CellColorChanger cellColorChanger)
+        public void Initialize(GridViewShower gridViewShower, GridCollection gridCollection)
         {
             _shower = gridViewShower;
             _gridCollection = gridCollection;
         }
 
-        public void Init(Vector2Int gridSize, Vector3 startPosition, float displayAndHideTime)
+        public void SetGridSettings(Vector2Int gridSize, Vector3 startPosition, float displayAndHideTime)
         {
             _gridSize = gridSize;
             _displayAndHideOneCellTime = displayAndHideTime / (gridSize.x + gridSize.y) / 2;

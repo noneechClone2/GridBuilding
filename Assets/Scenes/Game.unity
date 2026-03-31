@@ -685,11 +685,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b761b4456f094ce7a603b74f0043a237, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::App.Initializing.Installers.SessionInstaller
-  _buildHandler: {fileID: 1711364063}
   _gridView: {fileID: 1433251628}
-  _buildingData: {fileID: 11400000, guid: 29c099516c140f541929544e6cf8f274, type: 2}
-  _coroutinePerformer: {fileID: 161414015}
+  _buildHandler: {fileID: 1711364063}
+  buildingMaterials: {fileID: 11400000, guid: 29c099516c140f541929544e6cf8f274, type: 2}
   _buildingsPrefabsCollection: {fileID: 796500002}
+  _coroutinePerformer: {fileID: 161414015}
   _gameSaveLoadService: {fileID: 2140855676}
   _gridBuildingPlayerInputStateChanger: {fileID: 2119840519}
 --- !u!1 &608325064

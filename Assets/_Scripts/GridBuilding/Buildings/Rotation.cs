@@ -2,7 +2,9 @@ namespace GridBuilding.Buildings
 {
     public enum Rotation
     {
-        Horizontal,
-        Vertical
+        Forward = 0,
+        Right = 90,
+        Backward = 180,
+        Left = 270,
     }
 }

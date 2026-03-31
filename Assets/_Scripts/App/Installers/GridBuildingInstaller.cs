@@ -67,8 +67,9 @@ namespace App.Initializing.Installers
         
         private void BindBuilders()
         {
-            Container.BindInterfacesAndSelfTo<BuildingMover>().AsSingle().NonLazy();
+            Container.Bind<BuildingMover>().AsSingle().NonLazy();
             Container.Bind<BuildHandler>().FromInstance(_buildHandler).AsSingle();
+            Container.Bind<BuildingRotator>().AsSingle();
         }
 
         private void BindCollections()

@@ -1,34 +1,63 @@
+using System;
 using System.Collections.Generic;
 using App.Initializing.Operations;
 using GridBuilding.Builders;
 using GridBuilding.Buildings;
 using GridBuilding.Grid;
 using GridBuilding.Grid.Cells;
+using GridBuilding.Grid.View;
 using InputHandlers.PlayerInputState;
 using Zenject;
 
 namespace App.Initializing
 {
-    public class GridBuildingInitializer : IInitializable
+    public class GridBuildingInitializer : IInitializable, IDisposable
     {
         // private readonly string GameScene = "Game";
-        private readonly GridController _gridController;
         private readonly CellsLoadHandler _cellsLoadHandler;
+
         private readonly GridBuildingPlayerInputStateChanger _gridBuildingPlayerInputStateChanger;
         private readonly CurrentPlayerInputState _currentPlayerInputState;
-        private readonly BuildHandler _buildHandler;
-        private readonly BuildingData _buildingData;
 
-        public GridBuildingInitializer(GridController gridController, CellsLoadHandler cellsLoadHandler,
+        private readonly BuildHandler _buildHandler;
+        private readonly BuildingMaterials _buildingMaterials;
+        private readonly BuildingRotator _buildingRotator;
+        private readonly BuildingMover _buildingMover;
+
+        private readonly GridController _gridController;
+        private readonly GridView _gridView;
+        private readonly GridViewShower _gridViewShower;
+        private readonly CellColorChanger _cellColorChanger;
+        private readonly GridCollection _gridCollection;
+
+        private List<IDisposable> _disposables;
+
+        public GridBuildingInitializer(CellsLoadHandler cellsLoadHandler,
             GridBuildingPlayerInputStateChanger gridBuildingPlayerInputStateChanger,
-            CurrentPlayerInputState currentPlayerInputState, BuildHandler buildHandler, BuildingData buildingData)
+            CurrentPlayerInputState currentPlayerInputState,
+            BuildHandler buildHandler, BuildingMaterials buildingMaterials, BuildingRotator buildingRotator,
+            BuildingMover buildingMover,
+            GridController gridController, GridView gridView, GridViewShower gridViewShower,
+            CellColorChanger cellColorChanger, GridCollection gridCollection)
         {
-            _gridController = gridController;
             _cellsLoadHandler = cellsLoadHandler;
-            _gridBuildingPlayerInputStateChanger = gridBuildingPlayerInputStateChanger;
+
             _currentPlayerInputState = currentPlayerInputState;
+            _gridBuildingPlayerInputStateChanger = gridBuildingPlayerInputStateChanger;
+
             _buildHandler = buildHandler;
-            _buildingData = buildingData;
+            _buildingMaterials = buildingMaterials;
+            _buildingRotator = buildingRotator;
+            _buildingMover = buildingMover;
+
+            _gridController = gridController;
+            _gridView = gridView;
+            _gridViewShower = gridViewShower;
+            _cellColorChanger = cellColorChanger;
+            _gridCollection = gridCollection;
+
+            _disposables = new List<IDisposable>()
+                { _cellsLoadHandler, _buildingMover, _buildingRotator, _gridController, _cellColorChanger };
         }
 
 
@@ -36,18 +65,29 @@ namespace App.Initializing
         {
             var operationGroup = new OperationGroupPerformer(new List<IOperation>()
             {
-                new OperationFromAction(() => _gridController.Initialize()),
                 new OperationFromAction(() => _cellsLoadHandler.Initialize()),
+
                 new OperationFromAction(() =>
                     _gridBuildingPlayerInputStateChanger.Initialize(_currentPlayerInputState)),
-                new OperationFromAction(() => _buildHandler.Initialize(_buildingData)),
-            });
 
-            // _playerInputStateChanger.ChangePlayerInputState(PlayerInputStates.Editor);
+                new OperationFromAction(() => _buildHandler.Initialize(_buildingMaterials)),
+                new OperationFromAction(() => _buildingRotator.Initialize()),
+                new OperationFromAction((() =>  _buildingMover.Initialize())), 
+
+                new OperationFromAction(() => _gridView.Initialize(_gridViewShower, _gridCollection)),
+                new OperationFromAction(() => _gridController.Initialize()),
+                new OperationFromAction(() => _cellColorChanger.Initialize()),
+            });
 
             await operationGroup.DoOperations();
 
             // await SceneManager.LoadSceneAsync(GameScene);
+        }
+
+        public void Dispose()
+        {
+            foreach (var disposable in _disposables)
+                disposable.Dispose();
         }
     }
 }

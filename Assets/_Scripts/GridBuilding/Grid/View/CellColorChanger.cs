@@ -7,7 +7,7 @@ using Zenject;
 
 namespace GridBuilding.Grid.View
 {
-    public class CellColorChanger : IInitializable, IDisposable
+    public class CellColorChanger : IDisposable
     {
         private readonly Color UnavailableColor = new Color(1f, 0.4f, 0.4f);
         private readonly Color AvailableColor = Color.green;

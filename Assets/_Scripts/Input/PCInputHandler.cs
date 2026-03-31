@@ -8,10 +8,13 @@ namespace InputHandlers
 {
     public class PCInputHandler : ITickable, IFixedTickable, IInputHandler
     {
+        public event Action LeftMouseButtonClicked;
+        
         public event Action BuildingMovingStarted;
         public event Action BuildingMovingStopped;
         public event Action<Vector3Int> BuildingMoved;
-        public event Action LeftMouseButtonClicked;
+        public event Action BuildingRotated;
+
 
         private CurrentPlayerInputState _playerInputState;
         private Plane _rayCastPlane = new Plane(Vector3.up, Vector3.zero);
@@ -40,6 +43,9 @@ namespace InputHandlers
                 _isMouseAcitonPerforming = true;
                 await MouseAction();
             }
+            
+            if(Input.GetKeyDown(KeyCode.R) && _playerInputState.InputState == PlayerInputStates.BuildingEditor)
+                BuildingRotated?.Invoke();
         }
 
         public void FixedTick()

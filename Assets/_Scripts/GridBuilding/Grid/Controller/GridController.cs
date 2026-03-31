@@ -25,6 +25,16 @@ namespace GridBuilding.Grid
             _buildHandler = buildHandler;
         }
 
+        public void Initialize()
+        {
+            _buildHandler.BuildingCreated += OnBuildingCreated;
+            _buildHandler.Ticked += OnTicked;
+            _buildHandler.BuildingPlaced += OnBuildingPlaced;
+            
+            _gridModel.SetSize(GridSize.x, GridSize.y);
+            _gridView.SetGridSettings(GridSize, StartPosition, 0.3f);
+        }
+
         private void OnBuildingCreated(Building building)
         {
             _currentBuilding = building;
@@ -52,18 +62,8 @@ namespace GridBuilding.Grid
 
         private Vector2Int GetCurrentBuilldingPositionOnGrid()
         {
-            return new Vector2Int(Mathf.FloorToInt(_currentBuilding.transform.position.x - _currentBuilding.HalfSize.x - StartPosition.x),
-                Mathf.FloorToInt(_currentBuilding.transform.position.z - _currentBuilding.HalfSize.z - StartPosition.z));
-        }
-
-        public void Initialize()
-        {
-            _buildHandler.BuildingCreated += OnBuildingCreated;
-            _buildHandler.Ticked += OnTicked;
-            _buildHandler.BuildingPlaced += OnBuildingPlaced;
-            
-            _gridModel.SetSize(GridSize.x, GridSize.y);
-            _gridView.Init(GridSize, StartPosition, 0.3f);
+            return new Vector2Int(Mathf.FloorToInt(_currentBuilding.transform.position.x - 0.5f - StartPosition.x),
+                Mathf.FloorToInt(_currentBuilding.transform.position.z - 0.5f - StartPosition.z));
         }
 
         public void Dispose()
