@@ -1551,7 +1551,6 @@ GameObject:
   - component: {fileID: 1217483055}
   - component: {fileID: 1217483054}
   - component: {fileID: 1217483053}
-  - component: {fileID: 1217483056}
   m_Layer: 5
   m_Name: CreateRectangleButton
   m_TagString: Untagged
@@ -1722,19 +1721,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217483051}
   m_CullTransparentMesh: 1
---- !u!114 &1217483056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1217483051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08baf8497f2f7354c9335778890bb685, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UI.Button
-  _isMouseOver: 0
 --- !u!1 &1327476810
 GameObject:
   m_ObjectHideFlags: 0

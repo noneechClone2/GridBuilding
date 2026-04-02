@@ -8,7 +8,6 @@ namespace InputHandlers.PlayerInputState
 
         public void ChangeInputState(PlayerInputStates newInputState)
         {
-            Debug.Log(newInputState);
             InputState = newInputState;
         }
     }

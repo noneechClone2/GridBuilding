@@ -39,7 +39,7 @@ namespace GridBuilding.Buildings
             else
                 angle = Mathf.Abs(Rotation - rotation);
             
-            Debug.Log(angle + " " + rotation);
+            // Debug.Log(angle + " " + rotation);
 
             _buildingTransform.RotateAround(transform.position, Vector3.up, angle);
 
@@ -48,16 +48,11 @@ namespace GridBuilding.Buildings
                 foreach (var cell in _occupiedCells)
                 {
                     int x = cell.XPosition;
-
+                    
                     cell.XPosition = cell.YPosition;
                     cell.YPosition = x;
-
-                    if ((Rotation == Rotation.Left && rotation == Rotation.Forward) ||
-                        (Rotation == Rotation.Right && rotation == Rotation.Backward))
-                    {
-                        cell.YPosition = cell.YPosition * -1;
-                        Debug.Log("Multiplied " + cell.YPosition);
-                    }
+                    
+                    cell.YPosition = cell.YPosition * -1;
                 }
             }
             
