@@ -32,14 +32,7 @@ namespace GridBuilding.Buildings
 
         public void Rotate(Rotation rotation)
         {
-            int angle;
-            
-            if(Rotation == Rotation.Left && rotation == Rotation.Forward)
-                angle = 90;
-            else
-                angle = Mathf.Abs(Rotation - rotation);
-            
-            // Debug.Log(angle + " " + rotation);
+            int angle = Mathf.Abs(Rotation - rotation);
 
             _buildingTransform.RotateAround(transform.position, Vector3.up, angle);
 
@@ -49,10 +42,26 @@ namespace GridBuilding.Buildings
                 {
                     int x = cell.XPosition;
                     
-                    cell.XPosition = cell.YPosition;
+                    cell.XPosition = cell.YPosition * -1;
                     cell.YPosition = x;
+                }
+            }
+            else if (angle == 180)
+            {
+                foreach (var cell in _occupiedCells)
+                {
+                    cell.XPosition *= -1;
+                    cell.YPosition *= -1;
+                }
+            }
+            else
+            {
+                foreach (var cell in _occupiedCells)
+                {
+                    int x = cell.XPosition;
                     
-                    cell.YPosition = cell.YPosition * -1;
+                    cell.XPosition = cell.YPosition * -1;
+                    cell.YPosition = x;
                 }
             }
             
