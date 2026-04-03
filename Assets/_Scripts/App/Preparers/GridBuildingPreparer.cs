@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using App.Initializing.Operations;
+using Data;
+using Data.Loaders;
 using GridBuilding.Builders;
 using GridBuilding.Buildings;
 using GridBuilding.Grid;
@@ -11,14 +13,16 @@ using Zenject;
 
 namespace App.Initializing
 {
-    public class GridBuildingInitializer : IInitializable, IDisposable
+    public class GridBuildingPreparer : IInitializable, IDisposable
     {
         // private readonly string GameScene = "Game";
         private readonly CellsLoadHandler _cellsLoadHandler;
 
         private readonly GridBuildingPlayerInputStateChanger _gridBuildingPlayerInputStateChanger;
         private readonly CurrentPlayerInputState _currentPlayerInputState;
-
+        
+        private readonly BuildingsLoadHandler _buildingsLoadHandler;
+        private readonly BuildingsLoader _buildingsLoader;
         private readonly BuildHandler _buildHandler;
         private readonly BuildingMaterials _buildingMaterials;
         private readonly BuildingRotator _buildingRotator;
@@ -32,9 +36,9 @@ namespace App.Initializing
 
         private List<IDisposable> _disposables;
 
-        public GridBuildingInitializer(CellsLoadHandler cellsLoadHandler,
+        public GridBuildingPreparer(CellsLoadHandler cellsLoadHandler,
             GridBuildingPlayerInputStateChanger gridBuildingPlayerInputStateChanger,
-            CurrentPlayerInputState currentPlayerInputState,
+            CurrentPlayerInputState currentPlayerInputState, BuildingsLoadHandler buildingsLoadHandler, BuildingsLoader buildingsLoader,
             BuildHandler buildHandler, BuildingMaterials buildingMaterials, BuildingRotator buildingRotator,
             BuildingMover buildingMover,
             GridController gridController, GridView gridView, GridViewShower gridViewShower,
@@ -45,6 +49,8 @@ namespace App.Initializing
             _currentPlayerInputState = currentPlayerInputState;
             _gridBuildingPlayerInputStateChanger = gridBuildingPlayerInputStateChanger;
 
+            _buildingsLoadHandler = buildingsLoadHandler;
+            _buildingsLoader = buildingsLoader;
             _buildHandler = buildHandler;
             _buildingMaterials = buildingMaterials;
             _buildingRotator = buildingRotator;
@@ -57,7 +63,7 @@ namespace App.Initializing
             _gridCollection = gridCollection;
 
             _disposables = new List<IDisposable>()
-                { _cellsLoadHandler, _buildingMover, _buildingRotator, _gridController, _cellColorChanger };
+                { _cellsLoadHandler, _buildingMover, _buildingRotator, _gridController, _cellColorChanger, _buildingsLoadHandler };
         }
 
 
@@ -69,7 +75,9 @@ namespace App.Initializing
 
                 new OperationFromAction(() =>
                     _gridBuildingPlayerInputStateChanger.Initialize(_currentPlayerInputState)),
-
+                
+                new OperationFromAction(() => _buildingsLoadHandler.Initialize()),
+                new OperationFromAction(() => _buildingsLoader.Initialize()),
                 new OperationFromAction(() => _buildHandler.Initialize(_buildingMaterials)),
                 new OperationFromAction(() => _buildingRotator.Initialize()),
                 new OperationFromAction((() =>  _buildingMover.Initialize())), 

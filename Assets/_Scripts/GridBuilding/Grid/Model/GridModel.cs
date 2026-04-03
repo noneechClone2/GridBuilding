@@ -69,7 +69,6 @@ namespace GridBuilding.Grid
 
         public void PlaceBuilding(int x, int y, Building building)
         {
-            _cells[x][y].SetCurrentBuilding(building.Id);
             foreach (var ocuppiedCell in building.OccupiedCells)
             {
                 _currentCellXPosition = x + ocuppiedCell.XPosition;

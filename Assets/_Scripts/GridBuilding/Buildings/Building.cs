@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using GridBuilding.Grid.Cells;
 using UnityEngine;
@@ -14,10 +15,11 @@ namespace GridBuilding.Buildings
         private BuildingMaterials _buildingMaterials;
 
         [field: SerializeField] public int Id { get; set; }
-        public Rotation Rotation { get; private set; }
-
+        [field: SerializeField] public Rotation Rotation { get; set; }
+        [field: SerializeField] public int XPosition { get; set; }
+        [field: SerializeField] public int YPosition { get; set; }
+        
         public IReadOnlyCollection<Cell> OccupiedCells => _occupiedCells;
-        public Vector3 HalfSize => _collider.bounds.size / 2;
 
         public void Init(BuildingMaterials buildingMaterials)
         {
@@ -32,7 +34,12 @@ namespace GridBuilding.Buildings
 
         public void Rotate(Rotation rotation)
         {
-            int angle = Mathf.Abs(Rotation - rotation);
+            int angle;
+
+            if (rotation == Rotation.Forward && Rotation == Rotation.Left)
+                angle = 90;
+            else
+                angle = Mathf.Abs(Rotation - rotation);
 
             _buildingTransform.RotateAround(transform.position, Vector3.up, angle);
 
@@ -42,8 +49,8 @@ namespace GridBuilding.Buildings
                 {
                     int x = cell.XPosition;
                     
-                    cell.XPosition = cell.YPosition * -1;
-                    cell.YPosition = x;
+                    cell.XPosition = cell.YPosition;
+                    cell.YPosition = x * -1;
                 }
             }
             else if (angle == 180)
@@ -68,9 +75,11 @@ namespace GridBuilding.Buildings
             Rotation = rotation;
         }
 
-        public void SetPosition(Vector3 position)
+        public void SetPosition(Vector3Int position)
         {
             transform.position = position + new Vector3(0.5f, 0.5f, 0.5f);
+            XPosition = position.x;
+            YPosition = position.z;
         }
 
         public void ChangeAvailability(bool isAvailable)
@@ -85,7 +94,7 @@ namespace GridBuilding.Buildings
         {
             _renderer.SetMaterials(new() { _buildingMaterials.EditModMaterial, _buildingMaterials.ShadesMaterial });
             Rotation = Rotation.Forward;
-            SetPosition(new Vector3(0, 0, 0));
+            SetPosition(new Vector3Int(0, 0, 0));
         }
     }
 }

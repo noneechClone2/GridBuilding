@@ -10,9 +10,9 @@ namespace Data
         private List<BaseDataLoader> _loaders;
         
         [Inject]
-        public void OnConstruct(GridLoader gridLoader)
+        public void OnConstruct(GridLoader gridLoader, BuildingsLoader buildingLoader)
         {
-            _loaders = new List<BaseDataLoader>() { gridLoader };
+            _loaders = new List<BaseDataLoader>() { gridLoader, buildingLoader };
         }
 
         public void Save()

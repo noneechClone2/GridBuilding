@@ -51,6 +51,8 @@ namespace GridBuilding.Builders
 
         public void Dispose()
         {
+            _buildHandler.BuildingCreated -= OnBuildingCreated;
+            _inputHandler.BuildingRotated -= Rotate;
         }
     }
 }

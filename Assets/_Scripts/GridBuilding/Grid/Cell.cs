@@ -14,17 +14,11 @@ namespace GridBuilding.Grid.Cells
 
         [field: SerializeField] public int XPosition;
         [field: SerializeField] public int YPosition;
-        [field: SerializeField] public int CurrentBuildingId = -1;
 
         public void SetCellPosition(int x, int y)
         {
             XPosition = x;
             YPosition = y;
-        }
-
-        public void SetCurrentBuilding(int buildingId)
-        {
-            CurrentBuildingId = buildingId;
         }
 
         public void SetAvailableBuildingType(BuildingAvailableTypes buildingType)

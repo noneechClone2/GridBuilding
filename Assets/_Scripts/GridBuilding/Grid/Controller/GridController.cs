@@ -48,14 +48,14 @@ namespace GridBuilding.Grid
             _currentBuilding.ChangeAvailability(_gridModel.IsGridsFree(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y, _currentBuilding));
         }
 
-        private void OnBuildingPlaced()
+        private void OnBuildingPlaced(Building building)
         {
             _currentBuildingPositionOnGrid = GetCurrentBuilldingPositionOnGrid();
 
-            if (_gridModel.IsGridsFree(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y, _currentBuilding))
-                _gridModel.PlaceBuilding(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y, _currentBuilding);
+            if (_gridModel.IsGridsFree(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y, building))
+                _gridModel.PlaceBuilding(_currentBuildingPositionOnGrid.x, _currentBuildingPositionOnGrid.y, building);
             else
-                UnityEngine.Object.Destroy(_currentBuilding.gameObject);
+                UnityEngine.Object.Destroy(building.gameObject);
             
             _gridView.Hide();
         }

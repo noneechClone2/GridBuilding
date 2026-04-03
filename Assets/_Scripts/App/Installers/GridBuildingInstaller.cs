@@ -39,7 +39,7 @@ namespace App.Initializing.Installers
 
         private void BindInitializer()
         {
-            Container.BindInterfacesAndSelfTo<GridBuildingInitializer>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<GridBuildingPreparer>().AsSingle().NonLazy();
         }
 
         private void BindData()
@@ -50,24 +50,27 @@ namespace App.Initializing.Installers
         private void BindSavesAndLoads()
         {
             Container.Bind<GridLoader>().AsSingle();
-            Container.BindInterfacesAndSelfTo<BuildingsLoadHandler>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<CellsLoadHandler>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<CellsLoadHandler>().AsSingle();
+            
+            Container.Bind<BuildingsLoader>().AsSingle();
+            Container.Bind<BuildingsLoadHandler>().AsSingle();
+            
             Container.Bind<GameSaveLoadService>().FromInstance(_gameSaveLoadService).AsSingle();
         }
 
         private void BindGrid()
         {
-            Container.Bind<GridController>().AsSingle().NonLazy();
+            Container.Bind<GridController>().AsSingle();
             Container.Bind<GridView>().FromInstance(_gridView).AsSingle();
             Container.Bind<GridModel>().AsSingle();
             Container.Bind<GridViewShower>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellColorChanger>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<CellColorChanger>().AsSingle();
             Container.Bind<GridCollection>().AsSingle();
         }
         
         private void BindBuilders()
         {
-            Container.Bind<BuildingMover>().AsSingle().NonLazy();
+            Container.Bind<BuildingMover>().AsSingle();
             Container.Bind<BuildHandler>().FromInstance(_buildHandler).AsSingle();
             Container.Bind<BuildingRotator>().AsSingle();
         }

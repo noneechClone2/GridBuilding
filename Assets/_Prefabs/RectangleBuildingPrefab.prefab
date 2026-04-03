@@ -49,23 +49,18 @@ MonoBehaviour:
   - AvailableBuildingType: 1
     XPosition: 0
     YPosition: 0
-    CurrentBuildingId: 1
+    CurrentBuildingId: 0
   - AvailableBuildingType: 1
     XPosition: 0
     YPosition: 1
-    CurrentBuildingId: 1
-  - AvailableBuildingType: 1
-    XPosition: 1
-    YPosition: 1
-    CurrentBuildingId: 1
-  - AvailableBuildingType: 1
-    XPosition: 2
-    YPosition: 1
-    CurrentBuildingId: 1
+    CurrentBuildingId: 0
   _collider: {fileID: 588664704971071335}
   _renderer: {fileID: 3493173504550358722}
   _buildingTransform: {fileID: 5255406060420603608}
   <Id>k__BackingField: 1
+  <Rotation>k__BackingField: 0
+  <XPosition>k__BackingField: 0
+  <YPosition>k__BackingField: 0
 --- !u!1 &4007096319819106750
 GameObject:
   m_ObjectHideFlags: 0

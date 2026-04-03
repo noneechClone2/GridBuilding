@@ -1,41 +1,43 @@
 using System;
 using System.Collections.Generic;
+using Data.Loaders;
 using GridBuilding.Buildings;
 using GridBuilding.Grid;
 using UnityEngine;
 using Zenject;
+using Object = System.Object;
 
 
 namespace Data
 {
-    public class BuildingsLoadHandler : IInitializable
+    public class BuildingsLoadHandler : IDisposable
     {
         private BuildingsPrefabsCollection _buildingsPrefabs;
         private Dictionary<int, Building> _buildingsIdToBuilding;
 
-        private GridController _gridController;
         private Building _currentBuilding;
+        private BuildingsLoader _buildingLoader;
         private BuildingMaterials _buildingMaterials;
-        
-        public BuildingsLoadHandler(GridController gridController, BuildingMaterials buildingMaterials,  BuildingsPrefabsCollection buildingsPrefabs)
+
+        public BuildingsLoadHandler(BuildingMaterials buildingMaterials, BuildingsLoader buildingsLoader,
+            BuildingsPrefabsCollection buildingsPrefabs)
         {
-            _gridController = gridController;
+            _buildingLoader = buildingsLoader;
             _buildingMaterials = buildingMaterials;
             _buildingsPrefabs = buildingsPrefabs;
         }
 
-        public void CreateBuilding(int x, int y, int id)
+        private void OnDataLoaded(List<BuildingData> buildingDatas)
         {
-            if (!_buildingsIdToBuilding.ContainsKey(id))
-                throw new Exception("Buildings ID " + id + " is not inside building list");
-
-            if (_gridController.GridSize.x < x || _gridController.GridSize.y < y)
-                throw new ArgumentOutOfRangeException("Building position " + id + " is outside grid size");
-
-            _currentBuilding = UnityEngine.Object.Instantiate(_buildingsIdToBuilding[id]);
-            _currentBuilding.SetPosition(new Vector3(x + _gridController.StartPosition.x, 0, y + _gridController.StartPosition.z));
-            _currentBuilding.Init(_buildingMaterials);
-            _currentBuilding.Place();
+            foreach (var buildingData in buildingDatas)
+            {
+                var currentBuinding = UnityEngine.Object.Instantiate(_buildingsIdToBuilding[buildingData.Id]);
+                
+                currentBuinding.Init(_buildingMaterials);
+                currentBuinding.SetPosition(new Vector3Int(buildingData.XPosition, 0, buildingData.YPosition));
+                currentBuinding.Rotate(buildingData.Rotation);
+                currentBuinding.Place();
+            }
         }
 
         private void CreateBuildingsDictionary()
@@ -44,8 +46,6 @@ namespace Data
 
             foreach (var buildingPrefab in _buildingsPrefabs.BuildingsPrefabs)
             {
-                // _currentBuilding = building.GetComponent<Building>();
-
                 if (_buildingsIdToBuilding.ContainsKey(buildingPrefab.Id))
                     throw new Exception("Buildings ID " + buildingPrefab.Id + " is already in use");
 
@@ -56,6 +56,12 @@ namespace Data
         public void Initialize()
         {
             CreateBuildingsDictionary();
+            _buildingLoader.DataLoaded += OnDataLoaded;
+        }
+        
+        public void Dispose()
+        {
+            _buildingLoader.DataLoaded -= OnDataLoaded;
         }
     }
 }
