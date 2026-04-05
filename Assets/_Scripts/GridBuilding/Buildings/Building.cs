@@ -7,21 +7,21 @@ namespace GridBuilding.Buildings
 {
     public class Building : MonoBehaviour
     {
-        [SerializeField] private List<Cell> _occupiedCells;
-        [SerializeField] private Collider _collider;
-        [SerializeField] private Renderer _renderer;
-        [SerializeField] private Transform _buildingTransform;
-
-        private BuildingMaterials _buildingMaterials;
-
         [field: SerializeField] public int Id { get; set; }
         [field: SerializeField] public Rotation Rotation { get; set; }
         [field: SerializeField] public int XPosition { get; set; }
         [field: SerializeField] public int YPosition { get; set; }
         
+        [SerializeField] private List<Cell> _occupiedCells;
+        [SerializeField] private Renderer _renderer;
+        [SerializeField] private Transform _buildingTransform;
+
+        private BuildingMaterials _buildingMaterials;
+        
+        public Transform CenterTransform => _buildingTransform;
         public IReadOnlyCollection<Cell> OccupiedCells => _occupiedCells;
 
-        public void Init(BuildingMaterials buildingMaterials)
+        public void Initialize(BuildingMaterials buildingMaterials)
         {
             _buildingMaterials = buildingMaterials;
         }

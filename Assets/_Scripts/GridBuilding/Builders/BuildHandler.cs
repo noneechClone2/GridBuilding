@@ -13,8 +13,6 @@ namespace GridBuilding.Builders
 
         [SerializeField] private Transform _buildingsParentTransform;
 
-        // private int _buildingId;
-        // private Stack<int> _deletedBuildingIds;
         private Building _currentBuilding;
         private BuildingMaterials _buildingMaterials;
 
@@ -37,18 +35,8 @@ namespace GridBuilding.Builders
                 throw new Exception("Empty building prefab");
 
             _currentBuilding = Instantiate(buildingPrefab, _buildingsParentTransform);
-
-            // if (_deletedBuildingIds.Count == 0)
-            // {
-            //     _currentBuilding.Init(_buildingMaterials, _buildingId);
-            //     _buildingId++;
-            // }
-            // else
-            // {
-            //     _currentBuilding.Init(_buildingMaterials, _deletedBuildingIds.Pop());
-            // }
             
-            _currentBuilding.Init(_buildingMaterials);
+            _currentBuilding.Initialize(_buildingMaterials);
             
             _currentBuilding.OnCreated();
 

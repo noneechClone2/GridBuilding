@@ -33,7 +33,7 @@ namespace Data
             {
                 var currentBuinding = UnityEngine.Object.Instantiate(_buildingsIdToBuilding[buildingData.Id]);
                 
-                currentBuinding.Init(_buildingMaterials);
+                currentBuinding.Initialize(_buildingMaterials);
                 currentBuinding.SetPosition(new Vector3Int(buildingData.XPosition, 0, buildingData.YPosition));
                 currentBuinding.Rotate(buildingData.Rotation);
                 currentBuinding.Place();

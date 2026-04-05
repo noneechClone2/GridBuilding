@@ -1,3 +1,4 @@
+using _Scripts.GridBuilding.View;
 using Data;
 using Data.Loaders;
 using GridBuilding.Builders;
@@ -16,13 +17,17 @@ namespace App.Initializing.Installers
     {
         [SerializeField] private GridView _gridView;
         
+        [SerializeField] private CanvasRaycaster _canvasRaycaster;
+        
         [SerializeField] private BuildHandler _buildHandler;
-        [FormerlySerializedAs("_buildingData")] [SerializeField] private BuildingMaterials buildingMaterials;
+        [SerializeField] private BuildingMaterials buildingMaterials;
         [SerializeField] private BuildingsPrefabsCollection _buildingsPrefabsCollection;
         
         [SerializeField] private CoroutinePerformer _coroutinePerformer;
         [SerializeField] private GameSaveLoadService _gameSaveLoadService;
         [SerializeField] private GridBuildingPlayerInputStateChanger _gridBuildingPlayerInputStateChanger;
+        
+        [SerializeField] private EditingButtons _editingButtons;
         
         public override void InstallBindings()
         {
@@ -33,8 +38,20 @@ namespace App.Initializing.Installers
             BindCollections();
             BindInitializer();
             BindInput();
+            BindCanvasRaycaster();
+            BindEditingButtons();
             
             Container.Bind<CoroutinePerformer>().FromInstance(_coroutinePerformer).AsSingle();
+        }
+
+        private void BindCanvasRaycaster()
+        {
+            Container.Bind<CanvasRaycaster>().FromInstance(_canvasRaycaster).AsSingle();
+        }
+
+        private void BindEditingButtons()
+        {
+            Container.Bind<EditingButtons>().FromInstance(_editingButtons).AsSingle();
         }
 
         private void BindInitializer()
